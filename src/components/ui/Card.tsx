@@ -1,30 +1,52 @@
-import React from 'react';
+import { type HTMLAttributes, type ReactNode } from 'react';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
-interface CardProps {
-    children: React.ReactNode;
-    className?: string;
-    title?: string;
-    description?: string;
-    footer?: React.ReactNode;
+function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
 }
 
-export const Card = ({ children, className = '', title, description, footer }: CardProps) => {
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+    title?: string;
+    description?: string;
+    footer?: ReactNode;
+    children?: ReactNode;
+    noPadding?: boolean;
+}
+
+export function Card({
+    title,
+    description,
+    footer,
+    children,
+    className,
+    noPadding = false,
+    ...props
+}: CardProps) {
     return (
-        <div className={`bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col ${className}`}>
+        <div
+            className={cn(
+                "bg-white border border-slate-200/60 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]",
+                "hover:border-indigo-500/30 hover:shadow-[0_8px_24px_rgba(0,0,0,0.06)] hover:-translate-y-1",
+                "transition-all duration-300 ease-out",
+                className
+            )}
+            {...props}
+        >
             {(title || description) && (
-                <div className="px-6 py-5 border-b border-slate-100">
-                    {title && <h3 className="text-lg font-semibold text-slate-900 leading-6">{title}</h3>}
-                    {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}
+                <div className="p-6 border-b border-slate-100/50">
+                    {title && <h3 className="text-lg font-semibold text-slate-900 tracking-tight">{title}</h3>}
+                    {description && <p className="text-sm text-slate-500 mt-1 leading-relaxed">{description}</p>}
                 </div>
             )}
-            <div className="px-6 py-5 flex-1">
+            <div className={cn(noPadding ? "" : "p-6")}>
                 {children}
             </div>
             {footer && (
-                <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 rounded-b-xl">
+                <div className="bg-slate-50/50 border-t border-slate-100/50 p-4 rounded-b-2xl backdrop-blur-sm">
                     {footer}
                 </div>
             )}
         </div>
     );
-};
+}
