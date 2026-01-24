@@ -1,6 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
+import { ThemeProvider } from './context/ThemeContext';
+import { TeamProvider } from './context/TeamContext';
+import { ToastProvider } from './context/ToastContext';
+import { AnalyticsProvider } from './context/AnalyticsContext';
+import { MarketingProvider } from './context/MarketingContext';
 import { Layout } from './components/Layout/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { SOPList } from './pages/SOPList';
@@ -8,10 +13,30 @@ import { StrategyGenerator } from './pages/StrategyGenerator';
 import { LandingPage } from './pages/LandingPage';
 import { Onboarding } from './pages/Onboarding';
 import { SOPWizard } from './pages/SOPWizard';
+import { Analytics } from './pages/Analytics';
+import { TeamMembers } from './pages/TeamMembers';
+import { Settings } from './pages/Settings';
+import { Templates } from './pages/Templates';
+import FunnelBuilder from './pages/FunnelBuilder';
+import { EmailCampaignBuilder } from './pages/EmailCampaignBuilder';
+import { SocialMediaPlanner } from './pages/SocialMediaPlanner';
+import { LeadMagnetGenerator } from './pages/LeadMagnetGenerator';
+import { ROICalculator } from './pages/ROICalculator';
+import { ABTestingDashboard } from './pages/ABTestingDashboard';
+import { ContentCalendar } from './pages/ContentCalendar';
+import { AdCopyGenerator } from './pages/AdCopyGenerator';
+import { LandingPageBuilder } from './pages/LandingPageBuilder';
+import BookDemo from './pages/BookDemo';
+import AdminLeads from './pages/AdminLeads';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
-  const { user } = useAuth();
-  return user ? <>{children}</> : <Navigate to="/" />;
+  const { user, isAuthenticated } = useAuth();
+
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  return <>{children}</>;
 }
 
 function AppContent() {
@@ -19,13 +44,9 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/onboarding" element={<Onboarding />} />
+      <Route path="/book-demo" element={<BookDemo />} />
 
       {/* Protected Routes */}
-      <Route path="/" element={<PrivateRoute><Layout><Dashboard /></Layout></PrivateRoute>}>
-        {/* Note: This nested structure is a bit odd with the above. 
-              Let's use a wrapper for authenticated routes. 
-          */}
-      </Route>
 
       <Route
         path="/dashboard"
@@ -67,6 +88,146 @@ function AppContent() {
           </PrivateRoute>
         }
       />
+      <Route
+        path="/analytics"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Analytics />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/team"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <TeamMembers />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Settings />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/templates"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <Templates />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/funnel-builder"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <FunnelBuilder />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/email-campaigns"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <EmailCampaignBuilder />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/social-media-planner"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <SocialMediaPlanner />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/lead-magnets"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <LeadMagnetGenerator />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/roi-calculator"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <ROICalculator />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/ab-testing"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <ABTestingDashboard />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/content-calendar"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <ContentCalendar />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/ad-copy"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <AdCopyGenerator />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/landing-pages"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <LandingPageBuilder />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/admin/leads"
+        element={
+          <PrivateRoute>
+            <Layout>
+              <AdminLeads />
+            </Layout>
+          </PrivateRoute>
+        }
+      />
     </Routes>
   );
 }
@@ -74,13 +235,26 @@ function AppContent() {
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <DataProvider>
-          <AppContent />
-        </DataProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <TeamProvider>
+              <AnalyticsProvider>
+                <MarketingProvider>
+                  <DataProvider>
+                    <AppContent />
+                  </DataProvider>
+                </MarketingProvider>
+              </AnalyticsProvider>
+            </TeamProvider>
+          </AuthProvider>
+        </ToastProvider>
+      </ThemeProvider>
     </Router>
   );
 }
 
 export default App;
+
+
+

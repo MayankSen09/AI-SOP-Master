@@ -23,14 +23,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     children,
     ...props
 }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-medium transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-indigo-500/20 rounded-xl border';
+    const baseStyles = 'inline-flex items-center justify-center font-semibold transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-2 focus:ring-brand-primary/20 rounded-xl border';
 
     const variants = {
-        primary: 'bg-indigo-600 text-white border-transparent shadow-lg shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-indigo-600/30',
-        gradient: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white border-transparent shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:brightness-110',
-        secondary: 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-slate-300 shadow-sm',
-        ghost: 'bg-transparent text-slate-600 border-transparent hover:bg-indigo-50 hover:text-indigo-600',
-        danger: 'bg-white text-rose-600 border-slate-200 hover:bg-rose-50 hover:border-rose-200'
+        primary: 'bg-brand-primary text-white border-transparent shadow-lg shadow-brand-primary/20 hover:bg-brand-primary/90 hover:shadow-brand-primary/30',
+        gradient: 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white border-transparent shadow-lg shadow-brand-primary/20 hover:shadow-brand-primary/40 hover:brightness-110',
+        secondary: 'bg-surface border-default text-primary hover:bg-elevated shadow-sm hover:shadow-md transition-shadow',
+        ghost: 'bg-transparent border-transparent text-secondary hover:bg-elevated hover:text-primary',
+        danger: 'bg-surface text-rose-600 dark:text-rose-400 border-default hover:bg-rose-50 dark:hover:bg-rose-900/10 hover:border-rose-300 dark:hover:border-rose-900/20'
     };
 
     const sizes = {

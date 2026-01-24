@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, FileText, Settings, Rocket, Users, FolderOpen } from 'lucide-react';
+import { LayoutDashboard, FileText, Settings, Rocket, Users, FolderOpen, TrendingUp } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import clsx from 'clsx';
 
@@ -12,8 +12,11 @@ export const Sidebar: React.FC = () => {
     const links = [
         { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
         { to: '/sops', icon: FileText, label: 'SOP Library' },
-        // Show Strategy Generator for Admin and Editor
-        ...(user.role !== 'Viewer' ? [{ to: '/strategy', icon: Rocket, label: 'AI Strategy' }] : []),
+        // Show AI tools for Admin and Editor
+        ...(user.role !== 'Viewer' ? [
+            { to: '/strategy', icon: Rocket, label: 'AI Strategy' },
+            { to: '/funnel-builder', icon: TrendingUp, label: 'Funnel Builder' }
+        ] : []),
         { to: '/notifications', icon: Users, label: 'Team' },
         { to: '/settings', icon: Settings, label: 'Settings' },
     ];

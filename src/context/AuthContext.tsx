@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { User, UserRole } from '../types';
 
@@ -6,6 +6,7 @@ interface AuthContextType {
     user: User | null;
     login: (role: UserRole) => void;
     logout: () => void;
+    updateProfile: (updates: Partial<User>) => void;
     isAuthenticated: boolean;
 }
 
@@ -38,21 +39,40 @@ const MOCK_USERS: Record<UserRole, User> = {
 };
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(() => {
+        // Load user from localStorage on mount
+        const saved = localStorage.getItem('sop_user');
+        return saved ? JSON.parse(saved) : null;
+    });
+
+    // Persist user to localStorage whenever it changes
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('sop_user', JSON.stringify(user));
+        } else {
+            localStorage.removeItem('sop_user');
+        }
+    }, [user]);
 
     const login = (role: UserRole) => {
         // Simulate API call
-        setTimeout(() => {
-            setUser(MOCK_USERS[role]);
-        }, 500);
+        const mockUser = MOCK_USERS[role];
+        setUser(mockUser);
     };
 
     const logout = () => {
         setUser(null);
     };
 
+    const updateProfile = (updates: Partial<User>) => {
+        if (user) {
+            const updatedUser = { ...user, ...updates };
+            setUser(updatedUser);
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout, isAuthenticated: !!user }}>
+        <AuthContext.Provider value={{ user, login, logout, updateProfile, isAuthenticated: !!user }}>
             {children}
         </AuthContext.Provider>
     );

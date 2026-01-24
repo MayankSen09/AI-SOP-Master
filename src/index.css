@@ -5,19 +5,171 @@
 @tailwind utilities;
 
 @layer base {
+
+  /* ===== CSS CUSTOM PROPERTIES - LIGHT MODE (DEFAULT) ===== */
+  :root {
+    /* Backgrounds */
+    --bg-primary: #f8fafc;
+    /* slate-50 - main page bg */
+    --bg-surface: #ffffff;
+    /* white - cards, panels */
+    --bg-elevated: #f1f5f9;
+    /* slate-100 - elevated surfaces */
+    --bg-input: #ffffff;
+    /* white - input fields */
+    --bg-hover: #f1f5f9;
+    /* slate-100 - hover states */
+
+    /* Text Colors */
+    --text-primary: #0f172a;
+    /* slate-900 - main headings */
+    --text-secondary: #334155;
+    /* slate-700 - body text */
+    --text-tertiary: #64748b;
+    /* slate-500 - muted text */
+    --text-placeholder: #94a3b8;
+    /* slate-400 - placeholders */
+
+    /* Borders */
+    --border-default: #e2e8f0;
+    /* slate-200 - default borders */
+    --border-strong: #cbd5e1;
+    /* slate-300 - emphasized borders */
+    --border-subtle: #f1f5f9;
+    /* slate-100 - subtle dividers */
+  }
+
+  /* ===== CSS CUSTOM PROPERTIES - DARK MODE ===== */
+  .dark {
+    /* Backgrounds */
+    --bg-primary: #0b0e11;
+    /* architect-dark - main page bg */
+    --bg-surface: #161920;
+    /* architect-card - cards, panels */
+    --bg-elevated: #1e2128;
+    /* slightly lighter than card */
+    --bg-input: #161920;
+    /* architect-card - input fields */
+    --bg-hover: #1e2128;
+    /* slightly lighter - hover states */
+
+    /* Text Colors */
+    --text-primary: #ffffff;
+    /* white - main headings */
+    --text-secondary: #e2e8f0;
+    /* slate-200 - body text */
+    --text-tertiary: #94a3b8;
+    /* slate-400/architect-muted - muted text */
+    --text-placeholder: #64748b;
+    /* slate-500 - placeholders */
+
+    /* Borders */
+    --border-default: #2a2e3a;
+    /* architect-border - default borders */
+    --border-strong: #3a3e4a;
+    /* slightly lighter - emphasized borders */
+    --border-subtle: #1e2128;
+    /* very subtle dividers */
+  }
+
+  /* ===== BASE ELEMENT STYLES ===== */
   body {
-    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    @apply font-sans antialiased;
+  }
+
+  /* Headings - Theme aware */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--text-primary);
+    @apply font-bold tracking-tight;
   }
 
   h1 {
-    @apply text-3xl font-bold tracking-tight text-slate-900;
+    @apply text-4xl;
   }
 
   h2 {
-    @apply text-xl font-semibold text-slate-900;
+    @apply text-2xl;
   }
 
   h3 {
-    @apply text-lg font-semibold text-slate-900;
+    @apply text-xl;
+  }
+
+  .architect-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan-600 to-cyan-500 dark:from-brand-primary dark:to-brand-secondary;
+  }
+
+  /* Form inputs - Theme aware */
+  input,
+  textarea,
+  select {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border-color: var(--border-default);
+    @apply rounded-xl focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  /* Buttons default text color */
+  button {
+    color: var(--text-secondary);
+  }
+}
+
+/* ===== UTILITY CLASSES ===== */
+@layer utilities {
+
+  /* Background Utilities */
+  .bg-surface {
+    background-color: var(--bg-surface);
+  }
+
+  .bg-elevated {
+    background-color: var(--bg-elevated);
+  }
+
+  .bg-input {
+    background-color: var(--bg-input);
+  }
+
+  .bg-hover-state {
+    background-color: var(--bg-hover);
+  }
+
+  /* Text Utilities */
+  .text-primary {
+    color: var(--text-primary);
+  }
+
+  .text-secondary {
+    color: var(--text-secondary);
+  }
+
+  .text-tertiary {
+    color: var(--text-tertiary);
+  }
+
+  /* Border Utilities */
+  .border-default {
+    border-color: var(--border-default);
+  }
+
+  .border-strong {
+    border-color: var(--border-strong);
+  }
+
+  .border-subtle {
+    border-color: var(--border-subtle);
   }
 }

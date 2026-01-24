@@ -22,6 +22,7 @@ export interface SOP {
     createdAt: string;
     updatedAt: string;
     tags?: string[];
+    teamId?: string; // Added for team collaboration
 }
 
 export interface SOPVersion {
@@ -48,6 +49,31 @@ export interface Comment {
     createdAt: string;
 }
 
+// Team Collaboration Types
+export type TeamMemberRole = 'Owner' | 'Admin' | 'Editor' | 'Viewer';
+
+export interface Team {
+    id: string;
+    name: string;
+    inviteCode: string;
+    ownerId: string;
+    createdAt: string;
+    settings: TeamSettings;
+}
+
+export interface TeamMember {
+    id: string;
+    userId: string;
+    teamId: string;
+    role: TeamMemberRole;
+    joinedAt: string;
+}
+
+export interface TeamSettings {
+    allowInvites: boolean;
+    defaultMemberRole: UserRole;
+}
+
 // Marketing Strategy Types
 export interface MarketingStrategy {
     id: string;
@@ -72,4 +98,16 @@ export interface MarketingStrategy {
         duration: string;
         activities: string[];
     }[];
+    teamId?: string; // Added for team collaboration
+}
+
+// Analytics Types
+export interface AnalyticsEvent {
+    id: string;
+    teamId: string;
+    userId: string;
+    eventType: 'sop_created' | 'sop_updated' | 'sop_viewed' | 'strategy_generated';
+    resourceId: string;
+    timestamp: string;
+    metadata?: Record<string, any>;
 }

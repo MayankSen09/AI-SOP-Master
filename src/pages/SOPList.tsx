@@ -1,18 +1,55 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
-import { useAuth } from '../context/AuthContext';
-import { Search, Plus, FileText, MoreVertical, Filter, SlidersHorizontal } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
+import { Search, Plus, FileText, MoreVertical, Filter, SlidersHorizontal, Download, CheckCircle, Trash2, Eye, Copy, Hash, Globe, Database, Shield } from 'lucide-react';
 import { format } from 'date-fns';
-import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
+import { jsPDF } from 'jspdf';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 
 export const SOPList: React.FC = () => {
-    const { sops, departments } = useData();
-    const { user } = useAuth();
+    const { sops, departments, updateSOP, deleteSOP } = useData();
+    const { success, warning, error } = useToast();
+    const navigate = useNavigate();
     const [search, setSearch] = useState('');
     const [deptFilter, setDeptFilter] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
+    const [activeMenu, setActiveMenu] = useState<string | null>(null);
+    const [selectedSOPs, setSelectedSOPs] = useState<Set<string>>(new Set());
+
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        show: {
+            opacity: 1,
+            transition: { staggerChildren: 0.05 }
+        }
+    };
+
+    const itemVariants: Variants = {
+        hidden: { opacity: 0, y: 10 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+    };
+
+    // Keyboard shortcuts
+    React.useEffect(() => {
+        const handleKeyPress = (e: KeyboardEvent) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('sop-search')?.focus();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'n') {
+                e.preventDefault();
+                navigate('/sop-wizard');
+            }
+            if (e.key === 'Escape' && selectedSOPs.size > 0) {
+                setSelectedSOPs(new Set());
+            }
+        };
+        window.addEventListener('keydown', handleKeyPress);
+        return () => window.removeEventListener('keydown', handleKeyPress);
+    }, [selectedSOPs, navigate]);
 
     const filteredSOPs = sops.filter(sop => {
         const matchesSearch = sop.title.toLowerCase().includes(search.toLowerCase());
@@ -31,129 +68,166 @@ export const SOPList: React.FC = () => {
         }
     };
 
+    const handleDownloadPDF = (sop: any) => {
+        try {
+            const doc = new jsPDF();
+            doc.setFontSize(22);
+            doc.setFont('helvetica', 'bold');
+            doc.text(sop.title, 20, 25);
+            doc.setFontSize(10);
+            doc.text(`Department: ${departments.find(d => d.id === sop.departmentId)?.name || 'Unknown'}`, 20, 35);
+            doc.text(`Status: ${sop.status}`, 20, 41);
+            doc.save(`${sop.title.replace(/[^a-z0-9]/gi, '_')}.pdf`);
+            success('PDF Downloaded.');
+        } catch (err) {
+            error('PDF Generation Failed.');
+        }
+        setActiveMenu(null);
+    };
+
+    const handleApprove = (sop: any) => {
+        updateSOP(sop.id, { status: 'Approved' });
+        success(`"${sop.title}" approved.`);
+        setActiveMenu(null);
+    };
+
+    const handleDelete = (sop: any) => {
+        if (confirm(`Authorize deletion of ${sop.title}?`)) {
+            deleteSOP(sop.id);
+            warning('System purged.');
+        }
+        setActiveMenu(null);
+    };
+
     return (
-        <div className="space-y-6">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Standard Operating Procedures</h1>
-                    <p className="text-slate-500 mt-1">Manage and track your organization's processes.</p>
-                </div>
-                {user?.role !== 'Viewer' && (
-                    <Button icon={Plus}>
-                        Create SOP
-                    </Button>
-                )}
-            </div>
-
-            <Card className="p-4">
-                <div className="flex flex-col md:flex-row gap-4">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                        <input
-                            type="text"
-                            placeholder="Search by title..."
-                            className="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 bg-slate-50 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-                            value={search}
-                            onChange={e => setSearch(e.target.value)}
-                        />
+        <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+            className="max-w-[1400px] mx-auto space-y-10"
+        >
+            {/* Header Area */}
+            <div className="flex flex-col md:flex-row justify-between items-end gap-6 border-b border-architect-border pb-10">
+                <div className="space-y-2">
+                    <div className="space-y-2">
+                        <h1 className="text-4xl font-bold text-gray-900 dark:text-white tracking-tight">Standard Operating <span className="architect-gradient">Procedures</span></h1>
+                        <p className="text-secondary dark:text-architect-muted font-medium text-sm">Manage and track your organization's protocols</p>
                     </div>
+                    <div className="flex items-center gap-4 w-full md:w-auto">
+                        <div className="relative flex-1 md:w-80 group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-architect-muted group-focus-within:text-brand-primary" />
+                            <input
+                                id="sop-search"
+                                type="text"
+                                placeholder="Search procedures..."
+                                value={search}
+                                onChange={e => setSearch(e.target.value)}
+                                className="w-full pl-12 pr-4 py-3 bg-white dark:bg-architect-card border border-slate-200 dark:border-architect-border rounded-2xl text-slate-900 dark:text-white text-xs font-black tracking-widest outline-none focus:border-brand-primary transition-all placeholder:text-slate-400"
+                            />
+                        </div>
+                        <Button variant="gradient" icon={Plus} onClick={() => navigate('/sop-wizard')} className="h-full px-8 font-bold text-sm">Create New SOP</Button>
+                    </div>
+                </div>
 
-                    <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
-                        <div className="flex items-center gap-2 min-w-[300px] md:min-w-0">
-                            <div className="relative">
-                                <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
-                                <select
-                                    className="pl-9 pr-8 py-2 rounded-lg border border-slate-200 bg-white text-sm outline-none cursor-pointer hover:bg-slate-50 focus:border-indigo-500 transition-colors"
-                                    value={deptFilter}
-                                    onChange={e => setDeptFilter(e.target.value)}
-                                >
-                                    <option value="">All Departments</option>
-                                    {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
-                                </select>
-                            </div>
-
-                            <div className="relative">
-                                <SlidersHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
-                                <select
-                                    className="pl-9 pr-8 py-2 rounded-lg border border-slate-200 bg-white text-sm outline-none cursor-pointer hover:bg-slate-50 focus:border-indigo-500 transition-colors"
-                                    value={statusFilter}
-                                    onChange={e => setStatusFilter(e.target.value)}
-                                >
-                                    <option value="">All Statuses</option>
-                                    {['Draft', 'Review', 'Approved', 'Archived'].map(s => <option key={s} value={s}>{s}</option>)}
-                                </select>
-                            </div>
+                {/* Filter Bar */}
+                <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-architect-dark border border-slate-200 dark:border-architect-border rounded-xl">
+                        <Filter className="w-3 h-3 text-slate-500 dark:text-architect-muted" />
+                        <select
+                            value={deptFilter}
+                            onChange={e => setDeptFilter(e.target.value)}
+                            className="bg-transparent text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest outline-none cursor-pointer"
+                        >
+                            <option value="">All Sectors</option>
+                            {departments.map(d => <option key={d.id} value={d.id}>{d.name}</option>)}
+                        </select>
+                    </div>
+                    <div className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-architect-dark border border-slate-200 dark:border-architect-border rounded-xl">
+                        <SlidersHorizontal className="w-3 h-3 text-slate-500 dark:text-architect-muted" />
+                        <select
+                            value={statusFilter}
+                            onChange={e => setStatusFilter(e.target.value)}
+                            className="bg-transparent text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-widest outline-none cursor-pointer"
+                        >
+                            <option value="">All Statuses</option>
+                            {['Draft', 'Review', 'Approved', 'Archived'].map(s => <option key={s} value={s}>{s}</option>)}
+                        </select>
+                    </div>
+                    <div className="ml-auto flex items-center gap-6">
+                        <div className="flex items-center gap-2">
+                            <Database className="w-3 h-3 text-brand-primary" />
+                            <span className="text-xs font-bold text-secondary dark:text-architect-muted">{filteredSOPs.length} Active SOPs</span>
                         </div>
                     </div>
                 </div>
-            </Card>
+            </div>
 
-            <Card className="overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left">
-                        <thead className="text-xs text-slate-500 uppercase bg-slate-50/50 border-b border-slate-100">
-                            <tr>
-                                <th className="px-6 py-4 font-semibold">Title</th>
-                                <th className="px-6 py-4 font-semibold">Department</th>
-                                <th className="px-6 py-4 font-semibold">Status</th>
-                                <th className="px-6 py-4 font-semibold">Last Updated</th>
-                                <th className="px-6 py-4 font-semibold text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100">
-                            {filteredSOPs.length === 0 ? (
-                                <tr>
-                                    <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
-                                        <div className="flex flex-col items-center justify-center">
-                                            <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-3">
-                                                <Search className="w-6 h-6 text-slate-400" />
-                                            </div>
-                                            <p className="font-medium text-slate-900">No SOPs found</p>
-                                            <p className="text-sm mt-1">Try adjusting your search or filters.</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ) : (
-                                filteredSOPs.map((sop) => (
-                                    <tr key={sop.id} className="hover:bg-slate-50/80 transition-colors group">
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 shrink-0">
-                                                    <FileText className="w-5 h-5" />
-                                                </div>
-                                                <div>
-                                                    <p className="font-medium text-slate-900 group-hover:text-indigo-600 transition-colors">{sop.title}</p>
-                                                    <span className="text-xs text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">v{sop.currentVersion}.0</span>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="text-slate-600">
-                                                {departments.find(d => d.id === sop.departmentId)?.name || 'Unknown'}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <Badge variant={getStatusVariant(sop.status)}>
-                                                {sop.status}
-                                            </Badge>
-                                        </td>
-                                        <td className="px-6 py-4 text-slate-500">
-                                            {format(new Date(sop.updatedAt), 'MMM d, yyyy')}
-                                        </td>
-                                        <td className="px-6 py-4 text-right">
-                                            <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
-                                                <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
-                                                    <MoreVertical className="w-4 h-4" />
-                                                </Button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </Card>
-        </div>
+            {/* Ledger Content */}
+            <div className="grid grid-cols-1 gap-4">
+                <AnimatePresence mode="popLayout">
+                    {filteredSOPs.length === 0 ? (
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-20 text-center space-y-4 bg-white/50 dark:bg-architect-card/30 border border-dashed border-slate-200 dark:border-architect-border rounded-3xl">
+                            <div className="p-4 bg-slate-100 dark:bg-architect-dark w-16 h-16 rounded-2xl mx-auto flex items-center justify-center border border-slate-200 dark:border-architect-border">
+                                <Search className="w-6 h-6 text-slate-400 dark:text-architect-muted" />
+                            </div>
+                            <p className="text-sm font-bold text-slate-600 dark:text-white">No matching procedures found</p>
+                        </motion.div>
+                    ) : (
+                        filteredSOPs.map((sop) => (
+                            <motion.div
+                                key={sop.id}
+                                variants={itemVariants}
+                                layout
+                                className="group relative flex items-center gap-6 p-6 bg-white dark:bg-architect-card border border-slate-200 dark:border-architect-border rounded-3xl hover:border-brand-primary transition-all duration-500 overflow-hidden cursor-pointer shadow-sm hover:shadow-md"
+                                onClick={() => navigate('/sops')}
+                            >
+                                <div className="absolute top-0 left-0 w-1 h-full bg-architect-gradient opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                                <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-architect-dark border border-slate-200 dark:border-architect-border flex items-center justify-center text-slate-900 dark:text-white group-hover:text-brand-primary group-hover:border-brand-primary/50 transition-all">
+                                    <FileText className="w-6 h-6" />
+                                </div>
+
+                                <div className="flex-1 min-w-0">
+                                    <div className="flex items-center gap-3 mb-1">
+                                        <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight truncate group-hover:text-brand-primary transition-colors">{sop.title}</h3>
+                                        <Badge variant={getStatusVariant(sop.status)} className="text-[8px] font-black uppercase px-2 py-0.5">{sop.status}</Badge>
+                                    </div>
+                                    <div className="flex items-center gap-4 text-[10px] font-bold text-slate-500 dark:text-architect-muted uppercase tracking-widest">
+                                        <span className="flex items-center gap-1.5"><Globe className="w-3 h-3" /> {departments.find(d => d.id === sop.departmentId)?.name || 'General Sector'}</span>
+                                        <span className="flex items-center gap-1.5"><Hash className="w-3 h-3" /> v{sop.currentVersion}.0</span>
+                                        <span className="flex items-center gap-1.5"><Shield className="w-3 h-3" /> Modified {format(new Date(sop.updatedAt), 'dd.MM.yy')}</span>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); handleDownloadPDF(sop); }}
+                                        className="p-3 bg-slate-50 dark:bg-architect-dark/50 border border-slate-200 dark:border-architect-border rounded-xl text-slate-500 dark:text-architect-muted hover:text-brand-primary hover:border-brand-primary transition-all"
+                                    >
+                                        <Download className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); setActiveMenu(activeMenu === sop.id ? null : sop.id); }}
+                                        className="p-3 bg-slate-50 dark:bg-architect-dark/50 border border-slate-200 dark:border-architect-border rounded-xl text-slate-500 dark:text-architect-muted hover:text-brand-primary hover:border-brand-primary transition-all"
+                                    >
+                                        <MoreVertical className="w-4 h-4" />
+                                    </button>
+                                </div>
+
+                                {activeMenu === sop.id && (
+                                    <div className="absolute right-6 top-full mt-2 w-48 bg-white dark:bg-architect-card border border-slate-200 dark:border-architect-border rounded-2xl shadow-2xl py-2 z-50">
+                                        <button onClick={() => handleApprove(sop)} className="w-full px-4 py-3 text-left text-xs font-bold text-emerald-500 hover:bg-emerald-500/10 transition-colors flex items-center gap-2"><CheckCircle className="w-3 h-3" /> Approve</button>
+                                        <button onClick={() => navigate(`/sops/${sop.id}`)} className="w-full px-4 py-3 text-left text-xs font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center gap-2"><Eye className="w-3 h-3" /> View</button>
+                                        <button onClick={() => navigate(`/sop-wizard?clone=${sop.id}`)} className="w-full px-4 py-3 text-left text-xs font-bold text-slate-700 dark:text-white hover:bg-slate-100 dark:hover:bg-white/5 transition-colors flex items-center gap-2"><Copy className="w-3 h-3" /> Duplicate</button>
+                                        <div className="my-1 border-t border-architect-border" />
+                                        <button onClick={() => handleDelete(sop)} className="w-full px-4 py-3 text-left text-xs font-bold text-rose-500 hover:bg-rose-500/10 transition-colors flex items-center gap-2"><Trash2 className="w-3 h-3" /> Delete</button>
+                                    </div>
+                                )}
+                            </motion.div>
+                        ))
+                    )}
+                </AnimatePresence>
+            </div>
+        </motion.div>
     );
 };
