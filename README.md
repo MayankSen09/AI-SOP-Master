@@ -2,7 +2,7 @@
 
 A comprehensive, AI-powered Standard Operating Procedure (SOP) management system designed to streamline operations, generate marketing funnels, and enhance team productivity. This application allows organizations to create, manage, and distribute SOPs with ease, leveraging AI to generate content and strategies.
 
-![AI SOP System](https://sop-system-izu8tf44h-r-mayank-sens-projects.vercel.app/og-image.png) <!-- Replace with actual screenshot if available -->
+![AI SOP System](public/glass-funnel-ultra.png)
 
 ## 🚀 Live Demo
 
