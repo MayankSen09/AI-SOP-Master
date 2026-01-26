@@ -47,7 +47,7 @@ export const Sidebar: React.FC = () => {
             <div className="p-6 border-b border-border">
                 <div className="flex items-center gap-2 text-primary font-bold text-xl">
                     <FolderOpen className="w-6 h-6" />
-                    <span>SOP Manager</span>
+                    <span>SOP Manager v2.0</span>
                 </div>
             </div>
 
