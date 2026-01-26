@@ -6,6 +6,7 @@ import { TeamProvider } from './context/TeamContext';
 import { ToastProvider } from './context/ToastContext';
 import { AnalyticsProvider } from './context/AnalyticsContext';
 import { MarketingProvider } from './context/MarketingContext';
+import { GamificationProvider } from './context/GamificationContext';
 import { Layout } from './components/Layout/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { SOPList } from './pages/SOPList';
@@ -28,6 +29,13 @@ import { AdCopyGenerator } from './pages/AdCopyGenerator';
 import { LandingPageBuilder } from './pages/LandingPageBuilder';
 import BookDemo from './pages/BookDemo';
 import AdminLeads from './pages/AdminLeads';
+import TrendScanner from './pages/TrendScanner';
+import ContentRepurposing from './pages/ContentRepurposing';
+import AudiencePersonas from './pages/AudiencePersonas';
+import Leaderboard from './pages/Leaderboard';
+import SocialInbox from './pages/SocialInbox';
+import OptimizationLoop from './pages/OptimizationLoop';
+import Monetization from './pages/Monetization';
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated } = useAuth();
@@ -48,186 +56,39 @@ function AppContent() {
 
       {/* Protected Routes */}
 
-      <Route
-        path="/dashboard"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <Dashboard />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/sops"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <SOPList />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/strategy"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <StrategyGenerator />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/sop-wizard"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <SOPWizard />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/analytics"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <Analytics />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/team"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <TeamMembers />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/settings"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <Settings />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/templates"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <Templates />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/funnel-builder"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <FunnelBuilder />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/email-campaigns"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <EmailCampaignBuilder />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/social-media-planner"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <SocialMediaPlanner />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/lead-magnets"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <LeadMagnetGenerator />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/roi-calculator"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <ROICalculator />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/ab-testing"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <ABTestingDashboard />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/content-calendar"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <ContentCalendar />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/ad-copy"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <AdCopyGenerator />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/landing-pages"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <LandingPageBuilder />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/admin/leads"
-        element={
-          <PrivateRoute>
-            <Layout>
-              <AdminLeads />
-            </Layout>
-          </PrivateRoute>
-        }
-      />
+      <Route path="/dashboard" element={<PrivateRoute><Layout><Dashboard /></Layout></PrivateRoute>} />
+      <Route path="/sops" element={<PrivateRoute><Layout><SOPList /></Layout></PrivateRoute>} />
+
+      {/* AI Tools */}
+      <Route path="/strategy" element={<PrivateRoute><Layout><StrategyGenerator /></Layout></PrivateRoute>} />
+      <Route path="/sop-wizard" element={<PrivateRoute><Layout><SOPWizard /></Layout></PrivateRoute>} />
+      <Route path="/funnel-builder" element={<PrivateRoute><Layout><FunnelBuilder /></Layout></PrivateRoute>} />
+      <Route path="/email-campaigns" element={<PrivateRoute><Layout><EmailCampaignBuilder /></Layout></PrivateRoute>} />
+      <Route path="/social-media-planner" element={<PrivateRoute><Layout><SocialMediaPlanner /></Layout></PrivateRoute>} />
+      <Route path="/lead-magnets" element={<PrivateRoute><Layout><LeadMagnetGenerator /></Layout></PrivateRoute>} />
+      <Route path="/roi-calculator" element={<PrivateRoute><Layout><ROICalculator /></Layout></PrivateRoute>} />
+      <Route path="/ab-testing" element={<PrivateRoute><Layout><ABTestingDashboard /></Layout></PrivateRoute>} />
+      <Route path="/content-calendar" element={<PrivateRoute><Layout><ContentCalendar /></Layout></PrivateRoute>} />
+      <Route path="/ad-copy" element={<PrivateRoute><Layout><AdCopyGenerator /></Layout></PrivateRoute>} />
+      <Route path="/landing-pages" element={<PrivateRoute><Layout><LandingPageBuilder /></Layout></PrivateRoute>} />
+
+      {/* New AI Features */}
+      <Route path="/trend-scanner" element={<PrivateRoute><Layout><TrendScanner /></Layout></PrivateRoute>} />
+      <Route path="/content-repurposing" element={<PrivateRoute><Layout><ContentRepurposing /></Layout></PrivateRoute>} />
+      <Route path="/audience-personas" element={<PrivateRoute><Layout><AudiencePersonas /></Layout></PrivateRoute>} />
+      <Route path="/social-inbox" element={<PrivateRoute><Layout><SocialInbox /></Layout></PrivateRoute>} />
+      <Route path="/optimization" element={<PrivateRoute><Layout><OptimizationLoop /></Layout></PrivateRoute>} />
+      <Route path="/monetization" element={<PrivateRoute><Layout><Monetization /></Layout></PrivateRoute>} />
+
+      {/* Gamification */}
+      <Route path="/leaderboard" element={<PrivateRoute><Layout><Leaderboard /></Layout></PrivateRoute>} />
+
+      {/* Admin */}
+      <Route path="/analytics" element={<PrivateRoute><Layout><Analytics /></Layout></PrivateRoute>} />
+      <Route path="/team" element={<PrivateRoute><Layout><TeamMembers /></Layout></PrivateRoute>} />
+      <Route path="/settings" element={<PrivateRoute><Layout><Settings /></Layout></PrivateRoute>} />
+      <Route path="/templates" element={<PrivateRoute><Layout><Templates /></Layout></PrivateRoute>} />
+      <Route path="/admin/leads" element={<PrivateRoute><Layout><AdminLeads /></Layout></PrivateRoute>} />
     </Routes>
   );
 }
@@ -238,15 +99,17 @@ function App() {
       <ThemeProvider>
         <ToastProvider>
           <AuthProvider>
-            <TeamProvider>
-              <AnalyticsProvider>
-                <MarketingProvider>
-                  <DataProvider>
-                    <AppContent />
-                  </DataProvider>
-                </MarketingProvider>
-              </AnalyticsProvider>
-            </TeamProvider>
+            <GamificationProvider>
+              <TeamProvider>
+                <AnalyticsProvider>
+                  <MarketingProvider>
+                    <DataProvider>
+                      <AppContent />
+                    </DataProvider>
+                  </MarketingProvider>
+                </AnalyticsProvider>
+              </TeamProvider>
+            </GamificationProvider>
           </AuthProvider>
         </ToastProvider>
       </ThemeProvider>
@@ -255,6 +118,8 @@ function App() {
 }
 
 export default App;
+
+
 
 
 
