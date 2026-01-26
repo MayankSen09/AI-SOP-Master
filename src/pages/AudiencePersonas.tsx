@@ -37,7 +37,7 @@ export const AudiencePersonas: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Input Form */}
                 <div className="lg:col-span-1">
-                    <Card title="Define Target" className="sticky top-24">
+                    <Card title="Define Target" className="lg:sticky lg:top-24">
                         <form onSubmit={handleGenerate} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-slate-700 mb-1">Target Role</label>

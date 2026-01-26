@@ -29,9 +29,9 @@ export const SocialInbox: React.FC = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto h-[calc(100vh-100px)] flex gap-6 animate-in fade-in duration-500">
+        <div className="max-w-6xl mx-auto h-[calc(100vh-100px)] flex flex-col md:flex-row gap-6 animate-in fade-in duration-500">
             {/* Message List */}
-            <div className="w-1/3 flex flex-col gap-4">
+            <div className="w-full md:w-1/3 flex flex-col gap-4 h-1/3 md:h-full">
                 <div className="flex items-center gap-2 mb-2">
                     <MessageSquare className="w-6 h-6 text-indigo-600" />
                     <h2 className="text-xl font-bold text-slate-800">Unified Inbox</h2>
@@ -59,7 +59,7 @@ export const SocialInbox: React.FC = () => {
             </div>
 
             {/* Message Detail & Reply */}
-            <div className="flex-1 flex flex-col">
+            <div className="flex-1 flex flex-col h-2/3 md:h-full">
                 {selectedMessage ? (
                     <Card className="h-full flex flex-col p-0 overflow-hidden">
                         <div className="p-6 border-b border-slate-100 bg-slate-50/50">

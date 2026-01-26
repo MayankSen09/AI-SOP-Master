@@ -35,7 +35,7 @@ export const Monetization: React.FC = () => {
             </div>
 
             <Card className="p-6">
-                <form onSubmit={handleGenerate} className="flex gap-4 items-end">
+                <form onSubmit={handleGenerate} className="flex flex-col md:flex-row gap-4 items-stretch md:items-end">
                     <div className="flex-1">
                         <label className="block text-sm font-medium text-slate-700 mb-1">Your Niche / Industry</label>
                         <input
@@ -47,7 +47,7 @@ export const Monetization: React.FC = () => {
                             required
                         />
                     </div>
-                    <Button type="submit" disabled={isGenerating} className="h-[50px] px-8" icon={isGenerating ? Loader2 : DollarSign}>
+                    <Button type="submit" disabled={isGenerating} className="h-[50px] px-8 w-full md:w-auto" icon={isGenerating ? Loader2 : DollarSign}>
                         {isGenerating ? 'Strategizing...' : 'Generate Roadmap'}
                     </Button>
                 </form>

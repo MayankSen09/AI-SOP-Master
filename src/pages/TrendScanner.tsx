@@ -44,19 +44,19 @@ export const TrendScanner: React.FC = () => {
             </div>
 
             <Card className="p-6 bg-gradient-to-r from-indigo-50 to-white border-indigo-100">
-                <form onSubmit={handleScan} className="flex gap-4">
+                <form onSubmit={handleScan} className="flex flex-col md:flex-row gap-4">
                     <div className="flex-1 relative">
                         <Search className="absolute left-3 top-3 text-slate-400 w-5 h-5" />
                         <input
                             type="text"
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
-                            placeholder="Enter industry or topic (e.g., 'SaaS Marketing', 'Healthy Food', 'Crypto')"
+                            placeholder="Enter industry or topic (e.g., 'SaaS'"
                             className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all outline-none"
                             required
                         />
                     </div>
-                    <Button type="submit" disabled={isScanning} className="h-[46px] px-8" icon={isScanning ? Loader2 : Sparkles}>
+                    <Button type="submit" disabled={isScanning} className="h-[46px] w-full md:w-auto px-8" icon={isScanning ? Loader2 : Sparkles}>
                         {isScanning ? 'Scanning...' : 'Scan Trends'}
                     </Button>
                 </form>
