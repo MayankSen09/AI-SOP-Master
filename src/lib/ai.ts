@@ -309,3 +309,161 @@ Return ONLY the JSON object. No explanations, no markdown formatting.`;
         throw new Error(`Funnel generation failed: ${error.message || 'Unknown error'}`);
     }
 }
+
+// ------------------------------------------------------------------
+// NEW AI FEATURES
+// ------------------------------------------------------------------
+
+export async function scanTrends(query: string) {
+    try {
+        const prompt = `Identify top 5 trending topics for "${query}" on Instagram, LinkedIn, and X (Twitter) for the upcoming week.
+        Return JSON:
+        {
+            "trends": [
+                {
+                    "topic": "Trend Name",
+                    "platform": "Instagram | LinkedIn | X",
+                    "volume": "High | Medium",
+                    "brandFitIdeas": ["Idea 1", "Idea 2"]
+                }
+            ]
+        }`;
+        return await callGemini(prompt);
+    } catch (error) {
+        console.error("Trend Scan Error", error);
+        return { trends: [
+            { topic: "AI Automation", platform: "LinkedIn", volume: "High", brandFitIdeas: ["Showcase workflow wins", "Tutorial video"] },
+            { topic: "Behind the Scenes", platform: "Instagram", volume: "Medium", brandFitIdeas: ["Office tour", "Meet the team"] }
+        ]};
+    }
+}
+
+export async function repurposeContent(content: string, platforms: string[]) {
+    try {
+        const prompt = `Repurpose this content: "${content.substring(0, 500)}..." for ${platforms.join(', ')}.
+        Return JSON:
+        {
+            "variations": [
+                {
+                    "platform": "Platform Name",
+                    "content": "Full post content...",
+                    "hashtags": ["#tag1", "#tag2"]
+                }
+            ]
+        }`;
+        return await callGemini(prompt);
+    } catch (error) {
+        return { variations: platforms.map(p => ({ platform: p, content: `Repurposed content for ${p}: ${content.substring(0, 50)}...`, hashtags: ["#repurposed"] })) };
+    }
+}
+
+export async function generatePersona(inputs: any) {
+    try {
+        const prompt = `Create a detailed audience persona based on: ${JSON.stringify(inputs)}.
+        Return JSON:
+        {
+            "name": "Persona Name",
+            "role": "Job Title",
+            "demographics": "Age, Location, etc.",
+            "painPoints": ["Pain 1", "Pain 2"],
+            "emotionalTriggers": ["FOMO", "Trust", "Fun"],
+            "contentPreferences": ["Video", "Long-form text"]
+        }`;
+        return await callGemini(prompt);
+    } catch (error) {
+        return {
+            name: "Alex the Manager",
+            role: "Marketing Manager",
+            demographics: "30-45, Urban",
+            painPoints: ["Time management", "ROI pressure"],
+            emotionalTriggers: ["Efficiency", "Data-backed"],
+            contentPreferences: ["Case studies", "Quick tips"]
+        };
+    }
+}
+
+export async function generateReply(message: string, context: string) {
+     try {
+        const prompt = `Draft a reply to this message: "${message}". Context: ${context}.
+        Return JSON:
+        {
+            "sentiment": "Positive | Negative | Neutral",
+            "replyOptions": [
+                { "tone": "Professional", "text": "Draft reply..." },
+                { "tone": "Friendly", "text": "Draft reply..." }
+            ]
+        }`;
+        return await callGemini(prompt);
+    } catch (error) {
+        return {
+            sentiment: "Neutral",
+            replyOptions: [
+                { tone: "Professional", text: "Thank you for your message. We will get back to you shortly." },
+                 { tone: "Friendly", text: "Thanks for reaching out! We're on it. 😊" }
+            ]
+        };
+    }
+}
+
+export async function generateOptimizationTips(metrics: any) {
+    try {
+        const prompt = `Analyze these metrics: ${JSON.stringify(metrics)}. Provide 'Stop', 'Start', and 'Scale' recommendations.
+        Return JSON:
+        {
+            "recommendations": [
+                { "type": "Stop", "action": "Stop doing X", "reason": "Low engagement" },
+                { "type": "Start", "action": "Start doing Y", "reason": "Trending opportunity" },
+                { "type": "Scale", "action": "Scale Z", "reason": "High conversion" }
+            ],
+            "abTestIdeas": ["Test A vs B", "Test C vs D"]
+        }`;
+        return await callGemini(prompt);
+    } catch (error) {
+        return {
+             recommendations: [
+                { type: "Stop", action: "Low effort posts", reason: " declining reach" },
+                { type: "Start", action: "Video Content", reason: "High engagement on platform" },
+                { type: "Scale", action: "Customer Testimonials", reason: "Best conversion rate" }
+            ],
+            abTestIdeas: ["Short vs Long Caption", "Video vs Carousel"]
+        };
+    }
+}
+
+export async function generateMonetizationStrategy(niche: string) {
+    try {
+         const prompt = `Suggest monetization strategies for the "${niche}" niche.
+        Return JSON:
+        {
+            "leadMagnets": ["Idea 1", "Idea 2"],
+            "funnelSteps": ["Awareness", "Consideration", "Conversion"],
+            "offers": ["Course", "Consulting", "Template"]
+        }`;
+        return await callGemini(prompt);
+    } catch (error) {
+         return {
+            leadMagnets: ["Checklist", "E-book"],
+            funnelSteps: ["Ad -> Landing Page -> Email Sequence"],
+            offers: ["Masterclass", "1-on-1 Coaching"]
+        };
+    }
+}
+
+// Helper to reuse the fetch logic
+async function callGemini(prompt: string) {
+    if (!apiKey) throw new Error("API Key missing");
+    
+    const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        }
+    );
+     if (!response.ok) throw new Error("API Failed");
+     const data = await response.json();
+     const text = data.candidates[0].content.parts[0].text.trim();
+     return JSON.parse(text.replace(/^```json\n?/, '').replace(/\n?```$/, '').trim());
+}
+
