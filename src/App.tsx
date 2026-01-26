@@ -6,7 +6,6 @@ import { TeamProvider } from './context/TeamContext';
 import { ToastProvider } from './context/ToastContext';
 import { AnalyticsProvider } from './context/AnalyticsContext';
 import { MarketingProvider } from './context/MarketingContext';
-import { GamificationProvider } from './context/GamificationContext';
 import { Layout } from './components/Layout/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { SOPList } from './pages/SOPList';
@@ -32,7 +31,6 @@ import AdminLeads from './pages/AdminLeads';
 import TrendScanner from './pages/TrendScanner';
 import ContentRepurposing from './pages/ContentRepurposing';
 import AudiencePersonas from './pages/AudiencePersonas';
-import Leaderboard from './pages/Leaderboard';
 import SocialInbox from './pages/SocialInbox';
 import OptimizationLoop from './pages/OptimizationLoop';
 import Monetization from './pages/Monetization';
@@ -80,9 +78,6 @@ function AppContent() {
       <Route path="/optimization" element={<PrivateRoute><Layout><OptimizationLoop /></Layout></PrivateRoute>} />
       <Route path="/monetization" element={<PrivateRoute><Layout><Monetization /></Layout></PrivateRoute>} />
 
-      {/* Gamification */}
-      <Route path="/leaderboard" element={<PrivateRoute><Layout><Leaderboard /></Layout></PrivateRoute>} />
-
       {/* Admin */}
       <Route path="/analytics" element={<PrivateRoute><Layout><Analytics /></Layout></PrivateRoute>} />
       <Route path="/team" element={<PrivateRoute><Layout><TeamMembers /></Layout></PrivateRoute>} />
@@ -99,17 +94,15 @@ function App() {
       <ThemeProvider>
         <ToastProvider>
           <AuthProvider>
-            <GamificationProvider>
-              <TeamProvider>
-                <AnalyticsProvider>
-                  <MarketingProvider>
-                    <DataProvider>
-                      <AppContent />
-                    </DataProvider>
-                  </MarketingProvider>
-                </AnalyticsProvider>
-              </TeamProvider>
-            </GamificationProvider>
+            <TeamProvider>
+              <AnalyticsProvider>
+                <MarketingProvider>
+                  <DataProvider>
+                    <AppContent />
+                  </DataProvider>
+                </MarketingProvider>
+              </AnalyticsProvider>
+            </TeamProvider>
           </AuthProvider>
         </ToastProvider>
       </ThemeProvider>

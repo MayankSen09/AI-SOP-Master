@@ -9,7 +9,6 @@ import {
     FolderOpen,
     TrendingUp,
     Repeat,
-    Trophy,
     MessageSquare,
     RefreshCw,
     DollarSign,
@@ -17,11 +16,9 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import clsx from 'clsx';
-import { useGamification } from '../context/GamificationContext';
 
 export const Sidebar: React.FC = () => {
     const { user } = useAuth();
-    const { points } = useGamification();
 
     if (!user) return null;
 
@@ -30,20 +27,17 @@ export const Sidebar: React.FC = () => {
         { to: '/sops', icon: FileText, label: 'SOP Library' },
 
         // Advanced AI Tools
-        ...(user.role !== 'Viewer' ? [
-            { to: '/strategy', icon: Rocket, label: 'AI Strategy' },
-            { to: '/funnel-builder', icon: TrendingUp, label: 'Funnel Builder' },
-            { to: '/trend-scanner', icon: TrendingUp, label: 'Trend Scanner' },
-            { to: '/content-repurposing', icon: Repeat, label: 'Repurpose Engine' },
-            { to: '/audience-personas', icon: UserCircle, label: 'Personas' },
-        ] : []),
+        { to: '/strategy', icon: Rocket, label: 'AI Strategy' },
+        { to: '/funnel-builder', icon: TrendingUp, label: 'Funnel Builder' },
+        { to: '/trend-scanner', icon: TrendingUp, label: 'Trend Scanner' },
+        { to: '/content-repurposing', icon: Repeat, label: 'Repurpose Engine' },
+        { to: '/audience-personas', icon: UserCircle, label: 'Personas' },
 
         // Growth & Ops
         { to: '/social-inbox', icon: MessageSquare, label: 'Social Inbox' },
         { to: '/optimization', icon: RefreshCw, label: 'Optimization Loop' },
         { to: '/monetization', icon: DollarSign, label: 'Monetization' },
 
-        { to: '/leaderboard', icon: Trophy, label: 'Leaderboard' },
         { to: '/notifications', icon: Users, label: 'Team' },
         { to: '/settings', icon: Settings, label: 'Settings' },
     ];
@@ -74,17 +68,6 @@ export const Sidebar: React.FC = () => {
                     </NavLink>
                 ))}
             </nav>
-
-            <div className="p-4 border-t border-border">
-                <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-                    <div className="flex items-center justify-between mb-2">
-                        <span className="text-xs font-bold text-indigo-600 uppercase">Your Points</span>
-                        <Trophy className="w-4 h-4 text-indigo-500" />
-                    </div>
-                    <h4 className="font-bold text-2xl text-indigo-900">{points.toLocaleString()}</h4>
-                    <NavLink to="/leaderboard" className="text-xs text-indigo-600 hover:underline">View Leaderboard</NavLink>
-                </div>
-            </div>
         </aside>
     );
 };
