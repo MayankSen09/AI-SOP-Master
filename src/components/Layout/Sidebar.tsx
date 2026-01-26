@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, FileText, Wand2, BarChart3, Settings, Rocket, LogOut, Zap, TrendingUp, Mail, Share2, Megaphone, Layout } from 'lucide-react';
+import { LayoutDashboard, FileText, Wand2, BarChart3, Settings, Rocket, LogOut, Zap, TrendingUp, Mail, Share2, Megaphone, Layout, Repeat, MessageSquare, RefreshCw, DollarSign, UserCircle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
@@ -41,8 +41,8 @@ export const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                     {/* Logo Area */}
                     <div className="h-20 flex items-center px-8 border-b border-slate-200 dark:border-architect-border/50 bg-slate-50 dark:bg-architect-card/30 backdrop-blur-sm relative z-10">
                         <Zap className="w-8 h-8 text-brand-primary mr-3" />
-                        <span className="font-black text-2xl text-slate-900 dark:text-white tracking-tighter">
-                            SOP<span className="architect-gradient">SYSTEM</span>
+                        <span className="font-black text-xl text-slate-900 dark:text-white tracking-tighter">
+                            SOP<span className="architect-gradient">MANAGER v2.0</span>
                         </span>
                     </div>
 
@@ -64,42 +64,61 @@ export const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
                                     }
                                 `}
                             >
-                                <item.icon className={`w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110`} />
+                                <item.icon className="w-5 h-5 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" />
                                 {item.label}
                             </NavLink>
                         ))}
 
-                        <div className="mt-12 px-4 mb-4 text-xs font-bold text-secondary dark:text-architect-muted uppercase tracking-wider">
-                            Tools
+                        <div className="mt-8 px-4 mb-4 text-xs font-bold text-secondary dark:text-architect-muted uppercase tracking-wider">
+                            Advanced AI Tools
                         </div>
 
-                        <NavLink
-                            to="/strategy"
-                            className={({ isActive }) => `
-                                flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 group
-                                ${isActive
-                                    ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-xl shadow-brand-primary/10'
-                                    : 'text-architect-muted hover:bg-architect-card/50 hover:text-white'
-                                }
-                            `}
-                        >
-                            <TrendingUp className="w-5 h-5 flex-shrink-0" />
-                            Templates
-                        </NavLink>
+                        {[
+                            { icon: TrendingUp, label: 'Trend Scanner', path: '/trend-scanner' },
+                            { icon: Repeat, label: 'Repurpose Engine', path: '/content-repurposing' },
+                            { icon: UserCircle, label: 'Personas', path: '/audience-personas' },
+                            { icon: Rocket, label: 'AI Strategy', path: '/strategy' },
+                        ].map(item => (
+                            <NavLink
+                                key={item.path}
+                                to={item.path}
+                                className={({ isActive }) => `
+                                    flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 group
+                                    ${isActive
+                                        ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-xl shadow-brand-primary/10'
+                                        : 'text-slate-600 dark:text-architect-muted hover:bg-slate-50 dark:hover:bg-architect-card/50 hover:text-slate-900 dark:hover:text-white'
+                                    }
+                                `}
+                            >
+                                <item.icon className="w-5 h-5 flex-shrink-0" />
+                                {item.label}
+                            </NavLink>
+                        ))}
 
-                        <NavLink
-                            to="/funnel-builder"
-                            className={({ isActive }) => `
-                                flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 group
-                                ${isActive
-                                    ? 'bg-gradient-to-r from-brand-primary to-brand-secondary text-white shadow-xl shadow-brand-primary/10'
-                                    : 'text-slate-600 dark:text-architect-muted hover:bg-slate-50 dark:hover:bg-architect-card/50 hover:text-slate-900 dark:hover:text-white'
-                                }
-                            `}
-                        >
-                            <Rocket className="w-5 h-5 flex-shrink-0" />
-                            Funnel Builder
-                        </NavLink>
+                        <div className="mt-8 px-4 mb-4 text-xs font-bold text-secondary dark:text-architect-muted uppercase tracking-wider">
+                            Growth & Ops
+                        </div>
+
+                        {[
+                            { icon: MessageSquare, label: 'Social Inbox', path: '/social-inbox' },
+                            { icon: RefreshCw, label: 'Optimization Loop', path: '/optimization' },
+                            { icon: DollarSign, label: 'Monetization', path: '/monetization' },
+                        ].map(item => (
+                            <NavLink
+                                key={item.path}
+                                to={item.path}
+                                className={({ isActive }) => `
+                                    flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 group
+                                    ${isActive
+                                        ? 'bg-slate-100 dark:bg-architect-card text-slate-900 dark:text-white ring-1 ring-slate-200 dark:ring-architect-border'
+                                        : 'text-slate-600 dark:text-architect-muted hover:bg-slate-50 dark:hover:bg-architect-card/50 hover:text-slate-900 dark:hover:text-white'
+                                    }
+                                `}
+                            >
+                                <item.icon className="w-5 h-5 flex-shrink-0" />
+                                {item.label}
+                            </NavLink>
+                        ))}
 
                         <div className="mt-8 px-4 mb-4 text-xs font-bold text-secondary dark:text-architect-muted uppercase tracking-wider">
                             Campaigns
