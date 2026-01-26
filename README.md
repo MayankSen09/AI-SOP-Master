@@ -6,7 +6,7 @@ A comprehensive, AI-powered Standard Operating Procedure (SOP) management system
 
 ## 🚀 Live Demo
 
-**[View Live Application >](https://sop-system-izu8tf44h-r-mayank-sens-projects.vercel.app)**
+**[View Live Application >](https://ai-sop-master-gmwbdkzlx-r-mayank-sens-projects.vercel.app)**
 
 ## ✨ Key Features
 
