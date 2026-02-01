@@ -1,8 +1,12 @@
+import SecureLogger from './logger';
+import { sanitizePromptInput } from './validation';
+import { aiRateLimiter } from './rateLimit';
+
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 if (!apiKey) {
-    console.error('❌ VITE_GEMINI_API_KEY is not defined in environment variables!');
-    throw new Error('API key is required');
+    SecureLogger.error('VITE_GEMINI_API_KEY is not defined in environment variables');
+    throw new Error('AI service configuration error. Please contact support.');
 }
 
 export async function generateSOPContent(title: string, purpose: string, rawSteps: string) {

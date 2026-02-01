@@ -5,6 +5,7 @@ import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { useMarketing } from '../context/MarketingContext';
 import { useToast } from '../context/ToastContext';
+import DOMPurify from 'dompurify';
 
 const EMAIL_TEMPLATES = [
     { id: 'welcome', name: 'Welcome Email', icon: '👋', description: 'Onboard new subscribers' },
@@ -276,7 +277,13 @@ export function EmailCampaignBuilder() {
                                 {/* Email Content */}
                                 <div className="p-4 bg-white dark:bg-slate-900 min-h-[300px]">
                                     {formData.content ? (
-                                        <div dangerouslySetInnerHTML={{ __html: formData.content }} />
+                                        <div dangerouslySetInnerHTML={{
+                                            __html: DOMPurify.sanitize(formData.content, {
+                                                ALLOWED_TAGS: ['div', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong', 'em', 'u', 'br', 'a', 'img', 'ul', 'ol', 'li', 'table', 'tr', 'td', 'th', 'thead', 'tbody', 'span'],
+                                                ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'style', 'class', 'target', 'rel'],
+                                                ALLOW_DATA_ATTR: false
+                                            })
+                                        }} />
                                     ) : (
                                         <p className="text-slate-400 dark:text-slate-500 text-sm text-center">Email content preview will appear here...</p>
                                     )}
