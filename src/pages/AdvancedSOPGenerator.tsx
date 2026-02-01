@@ -181,8 +181,8 @@ export default function AdvancedSOPGenerator() {
                     <StepIndicator
                         number={1}
                         label="Template"
-                        active={step === 'template'}
-                        completed={step !== 'template'}
+                        active={false}
+                        completed={true}
                     />
                     <div className="w-16 h-0.5 bg-architect-border" />
                     <StepIndicator
