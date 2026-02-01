@@ -59,6 +59,66 @@ A comprehensive, AI-powered Standard Operating Procedure (SOP) management system
     npm run build
     ```
 
+## 📖 Using the Advanced SOP Generator
+
+### Quick Start
+
+1. Navigate to **"Advanced SOP"** in the sidebar (Management section)
+2. Choose from 6 industry-specific templates
+3. Customize your SOP with specific parameters
+4. Let AI generate a comprehensive, professional document
+5. Export as Markdown or PDF
+
+### Available Templates
+
+| Template | Icon | Phases | Best For |
+|----------|------|--------|----------|
+| **Social Media Management** | 📱 | 10 | Marketing agencies, content teams, social media managers |
+| **Sales Operations** | 🎯 | 8 | B2B sales teams, enterprise sales, SaaS companies |
+| **Customer Support** | 💬 | 7 | Support teams, help desks, customer success |
+| **Web Development** | 💻 | 9 | Development agencies, software teams, startups |
+| **Content Production** | ✍️ | 8 | Content agencies, marketing teams, publishers |
+| **HR Onboarding** | 👥 | 7 | HR departments, people operations, any company |
+
+### How It Works
+
+**Step 1: Template Selection**
+- Browse the template library
+- Each template is pre-configured with industry best practices
+- Template cards show category, phase count, and description
+
+**Step 2: Customization**
+- Enter your SOP title (e.g., "Instagram Content Strategy")
+- Select your industry
+- Configure template-specific parameters:
+  - Team size
+  - Target platforms
+  - Objectives and KPIs
+  - Compliance requirements
+  - And more...
+
+**Step 3: AI Generation**
+- Watch real-time progress (10-20 seconds)
+- AI researches industry best practices
+- Creates comprehensive phase structures
+- Formats with tables, checklists, and procedures
+
+**Step 4: Preview & Export**
+- Review the generated SOP with full markdown formatting
+- Export as Markdown (.md) for editing
+- Export as PDF for distribution
+- Save to library for future reference
+
+### Example Output
+
+Each generated SOP includes:
+- ✅ 7-10 detailed phases with clear objectives
+- ✅ Comprehensive tables (frameworks, comparisons, role matrices)
+- ✅ Actionable checklists with bullet points
+- ✅ Step-by-step procedures
+- ✅ Industry-specific best practices
+- ✅ Professional formatting ready for immediate use
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
