@@ -1,6 +1,7 @@
 import SecureLogger from './logger';
-import { sanitizePromptInput } from './validation';
-import { aiRateLimiter } from './rateLimit';
+// TODO: Integrate sanitizePromptInput and aiRateLimiter in AI functions
+// import { sanitizePromptInput } from './validation';
+// import { aiRateLimiter } from './rateLimit';
 
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
