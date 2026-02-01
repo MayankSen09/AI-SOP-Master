@@ -331,10 +331,12 @@ export async function scanTrends(query: string) {
         return await callGemini(prompt);
     } catch (error) {
         console.error("Trend Scan Error", error);
-        return { trends: [
-            { topic: "AI Automation", platform: "LinkedIn", volume: "High", brandFitIdeas: ["Showcase workflow wins", "Tutorial video"] },
-            { topic: "Behind the Scenes", platform: "Instagram", volume: "Medium", brandFitIdeas: ["Office tour", "Meet the team"] }
-        ]};
+        return {
+            trends: [
+                { topic: "AI Automation", platform: "LinkedIn", volume: "High", brandFitIdeas: ["Showcase workflow wins", "Tutorial video"] },
+                { topic: "Behind the Scenes", platform: "Instagram", volume: "Medium", brandFitIdeas: ["Office tour", "Meet the team"] }
+            ]
+        };
     }
 }
 
@@ -383,7 +385,7 @@ export async function generatePersona(inputs: any) {
 }
 
 export async function generateReply(message: string, context: string) {
-     try {
+    try {
         const prompt = `Draft a reply to this message: "${message}". Context: ${context}.
         Return JSON:
         {
@@ -399,7 +401,7 @@ export async function generateReply(message: string, context: string) {
             sentiment: "Neutral",
             replyOptions: [
                 { tone: "Professional", text: "Thank you for your message. We will get back to you shortly." },
-                 { tone: "Friendly", text: "Thanks for reaching out! We're on it. 😊" }
+                { tone: "Friendly", text: "Thanks for reaching out! We're on it. 😊" }
             ]
         };
     }
@@ -420,7 +422,7 @@ export async function generateOptimizationTips(metrics: any) {
         return await callGemini(prompt);
     } catch (error) {
         return {
-             recommendations: [
+            recommendations: [
                 { type: "Stop", action: "Low effort posts", reason: " declining reach" },
                 { type: "Start", action: "Video Content", reason: "High engagement on platform" },
                 { type: "Scale", action: "Customer Testimonials", reason: "Best conversion rate" }
@@ -432,7 +434,7 @@ export async function generateOptimizationTips(metrics: any) {
 
 export async function generateMonetizationStrategy(niche: string) {
     try {
-         const prompt = `Suggest monetization strategies for the "${niche}" niche.
+        const prompt = `Suggest monetization strategies for the "${niche}" niche.
         Return JSON:
         {
             "leadMagnets": ["Idea 1", "Idea 2"],
@@ -441,7 +443,7 @@ export async function generateMonetizationStrategy(niche: string) {
         }`;
         return await callGemini(prompt);
     } catch (error) {
-         return {
+        return {
             leadMagnets: ["Checklist", "E-book"],
             funnelSteps: ["Ad -> Landing Page -> Email Sequence"],
             offers: ["Masterclass", "1-on-1 Coaching"]
@@ -449,10 +451,157 @@ export async function generateMonetizationStrategy(niche: string) {
     }
 }
 
+// ------------------------------------------------------------------
+// ADVANCED SOP GENERATION
+// ------------------------------------------------------------------
+
+export async function generateAdvancedSOP(
+    templateId: string,
+    title: string,
+    industry: string,
+    parameters: Record<string, any>
+) {
+    try {
+        console.log('🚀 Starting Advanced SOP generation...', { templateId, title, industry });
+
+        const prompt = `You are an elite Standard Operating Procedure (SOP) architect with 20+ years of experience creating world-class operational documentation for Fortune 500 companies.
+
+**ASSIGNMENT**: Create a comprehensive, professional Standard Operating Procedure document.
+
+**CONTEXT**:
+- Template: ${templateId}
+- Title: ${title}
+- Industry: ${industry}
+- Parameters: ${JSON.stringify(parameters, null, 2)}
+
+**REQUIREMENTS**:
+
+1. **Research Industry Best Practices**: Research and incorporate the latest best practices for ${industry} in the ${templateId} domain.
+
+2. **Create Professional Structure**: Generate a detailed SOP with 7-10 phases (sections), where each phase includes:
+   - Clear, actionable objective
+   - Detailed procedures and steps
+   - Tables where appropriate (requirements, frameworks, responsibilities)
+   - Checklists for verification
+   - Role/responsibility mappings
+
+3. **Format as Markdown**: Use professional markdown formatting:
+   - Use "🔹 Phase N: Title" for phase headers
+   - Use tables for structured data (frameworks, comparisons, role matrices)
+   - Use checklists with ● or •  for action items
+   - Use **bold** for emphasis
+   - Use proper heading hierarchy (##, ###)
+   - Use horizontal rules (---) to separate major sections
+
+4. **Content Quality**:
+   - Be EXTREMELY specific and actionable
+   - Use ${industry} terminology
+   - Include real-world examples
+   - Provide step-by-step processes
+   - Add tips, warnings, and best practices
+   - Make it copy-paste ready for immediate use
+
+**OUTPUT FORMAT**:
+
+Return the SOP content as plain markdown text with the following structure:
+
+# ${title}
+
+**Version:** 1.0 | **Department:** [Department Name] | **Role:** [Target Role]
+
+---
+
+## 🔹 Phase 1: [Phase Title]
+
+**Objective:** [Clear objective statement]
+
+### [Section Title]
+
+[Detailed content with procedures, explanations, and guidance]
+
+| Category | Requirements |
+|----------|-------------|
+| Item 1   | Details     |
+| Item 2   | Details     |
+
+**✅ Checklist:**
+● [ ] Checklist item 1
+● [ ] Checklist item 2
+● [ ] Checklist item 3
+
+---
+
+## 🔹 Phase 2: [Phase Title]
+
+[Continue with remaining phases...]
+
+---
+
+**CRITICAL**: 
+- Research ${industry} best practices thoroughly
+- Make it highly specific to ${templateId}
+- Include at least 7-10 comprehensive phases
+- Each phase should be substantial (not just 2-3 sentences)
+- Use tables for structured information
+- Include actionable checklists throughout
+- Make it professional enough for enterprise use
+
+Return ONLY the markdown content. No JSON, no explanations, just the formatted SOP document.`;
+
+        console.log('📡 Calling Gemini API for Advanced SOP...');
+
+        const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: prompt
+                        }]
+                    }]
+                })
+            }
+        );
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`API Error ${response.status}: ${errorText}`);
+        }
+
+        const data = await response.json();
+        const markdownContent = data.candidates[0].content.parts[0].text.trim();
+
+        console.log('✅ Advanced SOP generated, length:', markdownContent.length);
+
+        // Return structured SOP object
+        return {
+            title,
+            template: templateId,
+            industry,
+            parameters,
+            content: markdownContent,
+            metadata: {
+                version: '1.0',
+                createdAt: new Date().toISOString(),
+                createdBy: 'AI SOP Generator',
+                wordCount: markdownContent.split(/\s+/).length
+            }
+        };
+
+    } catch (error: any) {
+        console.error('❌ Advanced SOP Generation Error:', error);
+        throw new Error(`Advanced SOP generation failed: ${error.message || 'Unknown error'}`);
+    }
+}
+
 // Helper to reuse the fetch logic
 async function callGemini(prompt: string) {
     if (!apiKey) throw new Error("API Key missing");
-    
+
     const response = await fetch(
         `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
         {
@@ -461,9 +610,9 @@ async function callGemini(prompt: string) {
             body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
         }
     );
-     if (!response.ok) throw new Error("API Failed");
-     const data = await response.json();
-     const text = data.candidates[0].content.parts[0].text.trim();
-     return JSON.parse(text.replace(/^```json\n?/, '').replace(/\n?```$/, '').trim());
+    if (!response.ok) throw new Error("API Failed");
+    const data = await response.json();
+    const text = data.candidates[0].content.parts[0].text.trim();
+    return JSON.parse(text.replace(/^```json\n?/, '').replace(/\n?```$/, '').trim());
 }
 

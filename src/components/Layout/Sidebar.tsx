@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, FileText, Wand2, BarChart3, Settings, Rocket, LogOut, Zap, TrendingUp, Mail, Share2, Megaphone, Layout, Repeat, MessageSquare, RefreshCw, DollarSign, UserCircle } from 'lucide-react';
+import { LayoutDashboard, FileText, Wand2, BarChart3, Settings, Rocket, LogOut, Zap, TrendingUp, Mail, Share2, Megaphone, Layout, Repeat, MessageSquare, RefreshCw, DollarSign, UserCircle, BookOpen } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
@@ -10,6 +10,7 @@ export const Sidebar = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => v
     const navItems = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard' },
         { icon: Wand2, label: 'SOP Wizard', path: '/sop-wizard' },
+        { icon: BookOpen, label: 'Advanced SOP', path: '/advanced-sop' },
         { icon: FileText, label: 'All SOPs', path: '/sops' },
         { icon: Rocket, label: 'Funnel Builder', path: '/funnel-builder' },
         { icon: BarChart3, label: 'Analytics', path: '/analytics' },

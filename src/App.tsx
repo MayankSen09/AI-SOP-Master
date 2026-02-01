@@ -34,6 +34,8 @@ import AudiencePersonas from './pages/AudiencePersonas';
 import SocialInbox from './pages/SocialInbox';
 import OptimizationLoop from './pages/OptimizationLoop';
 import Monetization from './pages/Monetization';
+import AdvancedSOPGenerator from './pages/AdvancedSOPGenerator';
+
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, isAuthenticated } = useAuth();
@@ -60,6 +62,7 @@ function AppContent() {
       {/* AI Tools */}
       <Route path="/strategy" element={<PrivateRoute><Layout><StrategyGenerator /></Layout></PrivateRoute>} />
       <Route path="/sop-wizard" element={<PrivateRoute><Layout><SOPWizard /></Layout></PrivateRoute>} />
+      <Route path="/advanced-sop" element={<PrivateRoute><Layout><AdvancedSOPGenerator /></Layout></PrivateRoute>} />
       <Route path="/funnel-builder" element={<PrivateRoute><Layout><FunnelBuilder /></Layout></PrivateRoute>} />
       <Route path="/email-campaigns" element={<PrivateRoute><Layout><EmailCampaignBuilder /></Layout></PrivateRoute>} />
       <Route path="/social-media-planner" element={<PrivateRoute><Layout><SocialMediaPlanner /></Layout></PrivateRoute>} />
