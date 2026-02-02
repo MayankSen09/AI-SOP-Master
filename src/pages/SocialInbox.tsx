@@ -50,7 +50,7 @@ export const SocialInbox: React.FC = () => {
                             </div>
                             <p className="text-sm text-slate-600 line-clamp-2">{msg.text}</p>
                             <div className="mt-2 flex gap-2">
-                                <span className="text-[10px] uppercase font-bold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">{msg.platform}</span>
+                                <span className="text-[10px] uppercase font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 px-2 py-0.5 rounded">{msg.platform}</span>
                                 {msg.sentiment === 'negative' && <span className="text-[10px] text-red-600 bg-red-100 px-2 py-0.5 rounded font-bold flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> Urgent</span>}
                             </div>
                         </Card>
@@ -90,7 +90,7 @@ export const SocialInbox: React.FC = () => {
                                         {suggestions.replyOptions.map((option: any, idx: number) => (
                                             <div key={idx} className="group relative border border-slate-200 rounded-xl p-4 hover:border-indigo-300 hover:shadow-md transition-all cursor-pointer">
                                                 <div className="flex justify-between mb-2">
-                                                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400 group-hover:text-indigo-500">{option.tone}</span>
+                                                    <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300 group-hover:text-indigo-500">{option.tone}</span>
                                                     <button className="text-xs text-indigo-600 opacity-0 group-hover:opacity-100 font-medium">Use this</button>
                                                 </div>
                                                 <p className="text-slate-700 leading-relaxed text-sm">{option.text}</p>

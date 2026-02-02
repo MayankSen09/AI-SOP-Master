@@ -153,7 +153,7 @@ export default function FunnelBuilder() {
                 >
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/50 dark:bg-architect-card/50 border border-slate-200 dark:border-white/10 backdrop-blur-md mb-8 shadow-sm">
                         <div className="w-2 h-2 rounded-full bg-brand-primary animate-pulse" />
-                        <span className="text-[10px] font-bold tracking-widest uppercase text-slate-500 dark:text-architect-muted">Marketing Lab</span>
+                        <span className="text-[10px] font-bold tracking-widest uppercase text-slate-600 dark:text-slate-300">Marketing Lab</span>
                     </div>
                     <h1 className="text-6xl md:text-8xl font-black text-slate-900 dark:text-white tracking-tighter mb-6 text-center">
                         Funnel <span className="architect-gradient">Architect</span>
@@ -198,7 +198,7 @@ export default function FunnelBuilder() {
                                         </p>
                                         <div className="flex flex-wrap gap-2">
                                             {template.bestFor.map(tag => (
-                                                <span key={tag} className="text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-architect-dark/50 text-slate-500 dark:text-architect-muted border border-slate-200 dark:border-architect-border group-hover:border-brand-primary/20 transition-colors">
+                                                <span key={tag} className="text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-architect-dark/50 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-architect-border group-hover:border-brand-primary/20 transition-colors">
                                                     {tag}
                                                 </span>
                                             ))}
@@ -508,7 +508,7 @@ export default function FunnelBuilder() {
                                                     </p>
                                                     <div className="pl-14 space-y-2">
                                                         {stage.strategies?.map((strat: string, sIdx: number) => (
-                                                            <div key={sIdx} className="flex items-start gap-2 text-xs font-bold text-slate-500 dark:text-architect-muted">
+                                                            <div key={sIdx} className="flex items-start gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
                                                                 <div className="w-1.5 h-1.5 rounded-full bg-brand-secondary/40 mt-1 flex-shrink-0" />
                                                                 {strat}
                                                             </div>
@@ -572,7 +572,7 @@ export default function FunnelBuilder() {
                                                             <div className="p-4 rounded-2xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/5 group-hover:border-brand-primary/30 group-hover:bg-white dark:group-hover:bg-architect-dark transition-all">
                                                                 <div className="flex justify-between items-start">
                                                                     <div>
-                                                                        <div className="text-[10px] font-bold text-slate-400 dark:text-architect-muted uppercase tracking-widest mb-1">Month {idx + 1}</div>
+                                                                        <div className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest mb-1">Month {idx + 1}</div>
                                                                         <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1 group-hover:text-brand-primary transition-colors">{monthData.title.split(': ')[1] || monthData.title}</h4>
                                                                     </div>
                                                                     <button
