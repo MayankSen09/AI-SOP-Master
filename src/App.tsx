@@ -6,6 +6,7 @@ import { TeamProvider } from './context/TeamContext';
 import { ToastProvider } from './context/ToastContext';
 import { AnalyticsProvider } from './context/AnalyticsContext';
 import { MarketingProvider } from './context/MarketingContext';
+import { BrandingProvider } from './context/BrandingContext';
 import { Layout } from './components/Layout/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { SOPList } from './pages/SOPList';
@@ -35,6 +36,7 @@ import SocialInbox from './pages/SocialInbox';
 import OptimizationLoop from './pages/OptimizationLoop';
 import Monetization from './pages/Monetization';
 import AdvancedSOPGenerator from './pages/AdvancedSOPGenerator';
+import CompanySettings from './pages/CompanySettings';
 
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
@@ -85,6 +87,7 @@ function AppContent() {
       <Route path="/analytics" element={<PrivateRoute><Layout><Analytics /></Layout></PrivateRoute>} />
       <Route path="/team" element={<PrivateRoute><Layout><TeamMembers /></Layout></PrivateRoute>} />
       <Route path="/settings" element={<PrivateRoute><Layout><Settings /></Layout></PrivateRoute>} />
+      <Route path="/company-settings" element={<PrivateRoute><Layout><CompanySettings /></Layout></PrivateRoute>} />
       <Route path="/templates" element={<PrivateRoute><Layout><Templates /></Layout></PrivateRoute>} />
       <Route path="/admin/leads" element={<PrivateRoute><Layout><AdminLeads /></Layout></PrivateRoute>} />
     </Routes>
@@ -95,19 +98,21 @@ function App() {
   return (
     <Router>
       <ThemeProvider>
-        <ToastProvider>
-          <AuthProvider>
-            <TeamProvider>
-              <AnalyticsProvider>
-                <MarketingProvider>
-                  <DataProvider>
-                    <AppContent />
-                  </DataProvider>
-                </MarketingProvider>
-              </AnalyticsProvider>
-            </TeamProvider>
-          </AuthProvider>
-        </ToastProvider>
+        <BrandingProvider>
+          <ToastProvider>
+            <AuthProvider>
+              <TeamProvider>
+                <AnalyticsProvider>
+                  <MarketingProvider>
+                    <DataProvider>
+                      <AppContent />
+                    </DataProvider>
+                  </MarketingProvider>
+                </AnalyticsProvider>
+              </TeamProvider>
+            </AuthProvider>
+          </ToastProvider>
+        </BrandingProvider>
       </ThemeProvider>
     </Router>
   );
