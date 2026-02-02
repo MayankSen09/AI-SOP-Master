@@ -27,8 +27,8 @@ export const StrategyGenerator: React.FC = () => {
     return (
         <div className="max-w-5xl mx-auto space-y-8">
             <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight mb-2">AI Marketing Strategy Generator</h1>
-                <p className="text-slate-500 max-w-2xl">
+                <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-2">AI Marketing Strategy Generator</h1>
+                <p className="text-slate-600 dark:text-slate-300 max-w-2xl">
                     Transform your business details into a comprehensive marketing roadmap using our advanced AI engine.
                 </p>
             </div>
@@ -137,7 +137,7 @@ export const StrategyGenerator: React.FC = () => {
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                     <div className="bg-white p-4 rounded-lg border border-sky-100 shadow-sm">
-                                        <strong className="block text-xs uppercase text-slate-400 font-semibold mb-2">Interests</strong>
+                                        <strong className="block text-xs uppercase text-slate-600 dark:text-slate-300 font-semibold mb-2">Interests</strong>
                                         <div className="flex flex-wrap gap-1.5">
                                             {result.meta.interests.map((i: string) => (
                                                 <span key={i} className="px-2 py-1 bg-sky-100 text-sky-700 rounded text-xs font-medium">{i}</span>
@@ -145,7 +145,7 @@ export const StrategyGenerator: React.FC = () => {
                                         </div>
                                     </div>
                                     <div className="bg-white p-4 rounded-lg border border-sky-100 shadow-sm">
-                                        <strong className="block text-xs uppercase text-slate-400 font-semibold mb-2">Behaviors</strong>
+                                        <strong className="block text-xs uppercase text-slate-600 dark:text-slate-300 font-semibold mb-2">Behaviors</strong>
                                         <ul className="space-y-1">
                                             {result.meta.behaviors.map((b: string) => (
                                                 <li key={b} className="text-sm text-slate-600 flex items-start gap-2">
@@ -156,7 +156,7 @@ export const StrategyGenerator: React.FC = () => {
                                         </ul>
                                     </div>
                                     <div className="bg-white p-4 rounded-lg border border-sky-100 shadow-sm">
-                                        <strong className="block text-xs uppercase text-slate-400 font-semibold mb-2">Demographics</strong>
+                                        <strong className="block text-xs uppercase text-slate-600 dark:text-slate-300 font-semibold mb-2">Demographics</strong>
                                         <p className="text-sm text-slate-600">{result.meta.demographics}</p>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@ export const StrategyGenerator: React.FC = () => {
                                     {result.roadmap.map((phase: any, idx: number) => (
                                         <div key={idx} className="flex gap-4 group">
                                             <div className="w-24 shrink-0 pt-1 text-right">
-                                                <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{phase.duration}</span>
+                                                <span className="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">{phase.duration}</span>
                                             </div>
                                             <div className="pb-8 relative border-l border-slate-200 pl-6 last:border-0 last:pb-0">
                                                 <div className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-indigo-600 ring-4 ring-slate-50 group-hover:ring-indigo-50 transition-all"></div>

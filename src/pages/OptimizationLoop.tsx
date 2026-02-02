@@ -32,11 +32,11 @@ export const OptimizationLoop: React.FC = () => {
     return (
         <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-500">
             <div>
-                <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2 flex items-center gap-3">
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 flex items-center gap-3">
                     <RefreshCw className="w-8 h-8 text-indigo-600" />
                     Smart Optimization Loop
                 </h1>
-                <p className="text-slate-500">
+                <p className="text-slate-600 dark:text-slate-300">
                     AI-driven analysis to tell you exactly what to stop, start, and scale.
                 </p>
             </div>
@@ -44,23 +44,23 @@ export const OptimizationLoop: React.FC = () => {
             {/* Metrics Snapshot */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <Card className="p-4 border-l-4 border-l-indigo-500">
-                    <p className="text-xs text-slate-500 uppercase font-bold">Avg. Engagement</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 uppercase font-bold">Avg. Engagement</p>
                     <div className="flex items-end gap-2 mt-1">
-                        <span className="text-2xl font-bold text-slate-900">4.8%</span>
+                        <span className="text-2xl font-bold text-slate-900 dark:text-white">4.8%</span>
                         <span className="text-xs text-emerald-600 font-bold mb-1 flex items-center"><TrendingUp className="w-3 h-3" /> +12%</span>
                     </div>
                 </Card>
                 <Card className="p-4 border-l-4 border-l-purple-500">
-                    <p className="text-xs text-slate-500 uppercase font-bold">Reach</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 uppercase font-bold">Reach</p>
                     <div className="flex items-end gap-2 mt-1">
-                        <span className="text-2xl font-bold text-slate-900">12.5k</span>
+                        <span className="text-2xl font-bold text-slate-900 dark:text-white">12.5k</span>
                         <span className="text-xs text-emerald-600 font-bold mb-1 flex items-center"><TrendingUp className="w-3 h-3" /> +5%</span>
                     </div>
                 </Card>
                 <Card className="p-4 border-l-4 border-l-orange-500">
-                    <p className="text-xs text-slate-500 uppercase font-bold">Conversion</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 uppercase font-bold">Conversion</p>
                     <div className="flex items-end gap-2 mt-1">
-                        <span className="text-2xl font-bold text-slate-900">1.2%</span>
+                        <span className="text-2xl font-bold text-slate-900 dark:text-white">1.2%</span>
                         <span className="text-xs text-red-600 font-bold mb-1 flex items-center"><TrendingDown className="w-3 h-3" /> -2%</span>
                     </div>
                 </Card>

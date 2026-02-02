@@ -34,11 +34,11 @@ export const TrendScanner: React.FC = () => {
     return (
         <div className="max-w-5xl mx-auto space-y-8 animate-in fade-in duration-500">
             <div>
-                <h1 className="text-3xl font-bold text-slate-900 tracking-tight mb-2 flex items-center gap-3">
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 flex items-center gap-3">
                     <TrendingUp className="w-8 h-8 text-indigo-600" />
                     AI Trend Scanner
                 </h1>
-                <p className="text-slate-500">
+                <p className="text-slate-600 dark:text-slate-300">
                     Predict upcoming trends and get brand-fit content ideas for every platform.
                 </p>
             </div>
@@ -68,7 +68,7 @@ export const TrendScanner: React.FC = () => {
                         <div className="flex justify-between items-start mb-4">
                             <div className="flex items-center gap-2">
                                 {getIcon(trend.platform)}
-                                <span className="text-xs font-bold uppercase text-slate-500 tracking-wider ">{trend.platform}</span>
+                                <span className="text-xs font-bold uppercase text-slate-600 dark:text-slate-300 tracking-wider ">{trend.platform}</span>
                             </div>
                             <span className={`px-2 py-1 rounded-full text-xs font-medium ${trend.volume === 'High' ? 'bg-red-100 text-red-700' : 'bg-orange-100 text-orange-700'}`}>
                                 {trend.volume} Volume
