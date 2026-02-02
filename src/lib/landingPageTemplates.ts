@@ -191,6 +191,8 @@ export const generateLeadMagnetContent = (data: TemplateData) => ({
         { number: '95%', label: 'Would Recommend', icon: '👍' },
         { number: '50+', label: 'Pages of Value', icon: '📚' },
     ],
+    pricing: undefined as any,
+    faqs: undefined as any,
     cta: {
         headline: 'Get Your Free Guide Now',
         subheadline: 'Join 100,000+ people who have already downloaded this game-changing resource.',
@@ -338,6 +340,7 @@ export const generateWebinarContent = (data: TemplateData) => ({
         { number: '4.9/5', label: 'Average Rating', icon: '⭐' },
         { number: '$0', label: 'Completely Free', icon: '💵' },
     ],
+    pricing: undefined as any,
     faqs: [
         {
             question: 'When is the webinar?',
