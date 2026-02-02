@@ -280,6 +280,7 @@ export const generateProductLaunchContent = (data: TemplateData) => ({
         { number: '50% OFF', label: 'Early Bird Savings', icon: '💰' },
         { number: '100%', label: 'Satisfaction Guarantee', icon: '✅' },
     ],
+    faqs: undefined as any,
     cta: {
         headline: '⏰ Early Bird Pricing Ends in 7 Days',
         subheadline: 'Don\'t miss your chance to lock in 50% off for life. Join 5,000+ smart people who\'ve already reserved their spot.',
