@@ -169,3 +169,5 @@ MIT — build whatever you want with it.
 **Built for founders who move fast and need an AI that keeps up.**
 
 </div>
+
+<!-- architectural review pending -->
