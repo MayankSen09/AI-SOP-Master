@@ -230,7 +230,15 @@ export const StrategyGenerator: React.FC = () => {
 function generateMockResult(data: any) {
     const industry = data.industry || 'Tech';
     
-    let frameworkDetails = {
+    interface FrameworkDetails {
+        title: string;
+        summary: string;
+        defense: string[];
+        metrics: string[];
+        roadmap: { phase: string; duration: string; activities: string[] }[];
+    }
+
+    let frameworkDetails: FrameworkDetails = {
         title: "",
         summary: "",
         defense: [],
