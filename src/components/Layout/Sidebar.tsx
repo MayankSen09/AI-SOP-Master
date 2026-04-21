@@ -5,7 +5,6 @@ import {
     BookOpen,
     DollarSign,
     Compass,
-    Calculator,
     FileText,
     Layers,
     Settings,
