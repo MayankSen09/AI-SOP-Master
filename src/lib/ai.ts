@@ -14,7 +14,6 @@ if (!apiKey) {
 }
 
 export async function generatePlaybookContent(title: string, purpose: string, rawSteps: string) {
-{
     try {
         const sanitizedTitle = sanitizePromptInput(title);
         const sanitizedPurpose = sanitizePromptInput(purpose);
