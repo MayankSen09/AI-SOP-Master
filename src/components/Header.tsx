@@ -56,3 +56,5 @@ export const Header: React.FC = () => {
         </header>
     );
 };
+
+// exhaustive-deps bypass
