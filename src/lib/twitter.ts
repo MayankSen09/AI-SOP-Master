@@ -64,7 +64,7 @@ export async function searchTweets(query: string, maxResults = 10): Promise<Twee
         );
 
         return data.data.map((t: any) => {
-            const user = users.get(t.author_id) || { name: 'Unknown', username: 'unknown' };
+            const user: any = users.get(t.author_id) || { name: 'Unknown', username: 'unknown' };
             return {
                 id: t.id,
                 text: t.text,

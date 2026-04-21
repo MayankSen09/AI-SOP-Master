@@ -27,7 +27,7 @@ export default function FunnelBuilder() {
     const [answers, setAnswers] = useState<Record<string, any>>({});
     const [questions, setQuestions] = useState<FunnelQuestion[]>([]);
     const [generatedFunnel, setGeneratedFunnel] = useState<any>(null);
-    const [simulationData, setSimulationData] = useState<any>(null);
+    const [, setSimulationData] = useState<any>(null);
     const [activeStage, setActiveStage] = useState<any>(null);
     const [openRoadmapData, setOpenRoadmapData] = useState<any>(null);
 

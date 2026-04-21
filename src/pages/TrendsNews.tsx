@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TrendingUp, Loader2, RefreshCw, Sparkles, Globe, Zap, Target, Bookmark, ExternalLink, Heart, Repeat2, MessageCircle } from 'lucide-react';
+import { Loader2, RefreshCw, Sparkles, Globe, Zap, Target, Heart, Repeat2, MessageCircle } from 'lucide-react';
 import { useFounder } from '../context/FounderContext';
 import { generateWithAI } from '../lib/ai';
 import { searchTweets, isTwitterConfigured, FOUNDER_QUERIES, type Tweet } from '../lib/twitter';
