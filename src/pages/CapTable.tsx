@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+
 import { PieChart, Calculator, ArrowRight, Activity, Percent, Plus, Trash2, DollarSign } from 'lucide-react';
 
 interface Shareholder {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, X, Users, Target, Clock, CheckCircle2, AlertCircle, Building2, ChevronRight, Activity, CalendarDays, History } from 'lucide-react';
+
+import { Plus, X, Users, Clock, CheckCircle2, Building2, ChevronRight, Activity, CalendarDays, History } from 'lucide-react';
 import { useFounder, type FundingRound, type Investor, type TimelineEvent } from '../context/FounderContext';
 
 const INVESTOR_STATUSES = [

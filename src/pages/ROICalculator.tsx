@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Calculator, TrendingUp, DollarSign, Percent, BarChart3, Clock, Zap, Wallet, Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Calculator, TrendingUp, Clock, Wallet, Activity } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, AreaChart, Area, XAxis, YAxis, CartesianGrid } from 'recharts';
@@ -201,7 +201,7 @@ export function ROICalculator() {
                                 <YAxis tickFormatter={(val) => `$${val / 1000}k`} tick={{ fontSize: 12, fill: '#64748b' }} axisLine={false} tickLine={false} />
                                 <Tooltip 
                                     contentStyle={{ backgroundColor: '#161920', border: '1px solid #2a2e3a', borderRadius: '12px', fontWeight: 'bold', color: '#fff' }}
-                                    formatter={(val: number) => [`$${val.toLocaleString()}`, 'Bank Balance']}
+                                    formatter={(val: any) => [`$${Number(val).toLocaleString()}`, 'Bank Balance']}
                                 />
                                 <Area type="monotone" dataKey="cash" stroke="#4facfe" strokeWidth={3} fillOpacity={1} fill="url(#colorCash)" />
                             </AreaChart>
@@ -234,7 +234,7 @@ export function ROICalculator() {
                                 </Pie>
                                 <Tooltip 
                                     contentStyle={{ backgroundColor: '#161920', border: '1px solid #2a2e3a', borderRadius: '12px', fontWeight: 'bold', color: '#fff' }}
-                                    formatter={(val: number) => [`$${val.toLocaleString()}`, 'Revenue']}
+                                    formatter={(val: any) => [`$${Number(val).toLocaleString()}`, 'Revenue']}
                                 />
                             </PieChart>
                         </ResponsiveContainer>
