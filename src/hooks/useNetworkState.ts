@@ -27,3 +27,5 @@ export function useNetworkState() {
 
     return isOnline;
 }
+
+// resilient caching boundary
