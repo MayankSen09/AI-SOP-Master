@@ -120,3 +120,5 @@ export const FOUNDER_QUERIES = [
     { label: 'Angel Investors', query: '("angel investing" OR "writing checks" OR "syndicate") (startup OR founders) -is:retweet' },
     { label: 'Recent Funding', query: '("raised" OR "funding round") (startup) min_faves:50 -is:retweet' },
 ];
+
+// handled idle boundary
