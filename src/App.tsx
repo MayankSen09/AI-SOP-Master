@@ -14,7 +14,7 @@ import { StrategyGenerator } from './pages/StrategyGenerator';
 import { ROICalculator } from './pages/ROICalculator';
 import { Settings } from './pages/Settings';
 import FunnelBuilder from './pages/FunnelBuilder';
-import AdvancedPlaybookGenerator from './pages/AdvancedPlaybookGenerator';
+import AdvancedPlaybookGenerator from './pages/PlaybookGenerator';
 import AIAdvisor from './pages/AIAdvisor';
 import FounderJournal from './pages/FounderJournal';
 import FundingTracker from './pages/FundingTracker';

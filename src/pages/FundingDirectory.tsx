@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Globe, ExternalLink, Loader2, RefreshCw, Search, Building2, Landmark, Rocket, DollarSign, ArrowUpRight, MapPin, Target, BarChart3, Clock, ChevronRight } from 'lucide-react';
+import { Loader2, RefreshCw, Search, Building2, Landmark, Rocket, DollarSign, ArrowUpRight, MapPin, Target, BarChart3, Clock } from 'lucide-react';
 import { useFounder } from '../context/FounderContext';
 import { generateWithAI } from '../lib/ai';
 
@@ -89,7 +89,7 @@ Return ONLY valid JSON array. No markdown:
         .filter(s => typeFilter === 'all' || s.type === typeFilter)
         .filter(s => !search || s.name.toLowerCase().includes(search.toLowerCase()) || s.description.toLowerCase().includes(search.toLowerCase()) || s.focus.toLowerCase().includes(search.toLowerCase()));
 
-    const typeCounts = { all: sources.length, ...Object.fromEntries(Object.keys(TYPE_META).map(k => [k, sources.filter(s => s.type === k).length])) };
+    const typeCounts: Record<string, number> = { all: sources.length, ...Object.fromEntries(Object.keys(TYPE_META).map(k => [k, sources.filter(s => s.type === k).length])) };
 
     return (
         <div className="min-h-screen page-bg">

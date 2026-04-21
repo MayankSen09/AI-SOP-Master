@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Sparkles, Bot, User, Loader2, RotateCcw } from 'lucide-react';
+import { Send, Sparkles, Bot, User, Loader2 } from 'lucide-react';
 import { useFounder, getFounderContext } from '../context/FounderContext';
 import { generateWithAI } from '../lib/ai';
 
 interface Message {
     role: 'user' | 'assistant';
     content: string;
-    timestamp: Date;
+    timestamp: Date | string;
 }
 
 const QUICK_PROMPTS = [
