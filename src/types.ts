@@ -111,3 +111,5 @@ export interface AnalyticsEvent {
     timestamp: string;
     metadata?: Record<string, any>;
 }
+
+// domain assertions
