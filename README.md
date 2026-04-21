@@ -171,3 +171,5 @@ MIT — build whatever you want with it.
 </div>
 
 <!-- architectural review pending -->
+
+<!-- edge gateway RFC -->
