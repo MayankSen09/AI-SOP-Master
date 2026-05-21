@@ -125,7 +125,7 @@ export class WizardService {
         const generatedContent = await aiService.generatePlaybook(combinedPrompt);
 
         // Create Playbook record
-        const playbook = await prisma.sOP.create({
+        const playbook = await prisma.playbook.create({
             data: {
                 title: generatedContent.title,
                 departmentId: 'general',
