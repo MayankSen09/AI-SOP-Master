@@ -12,17 +12,17 @@ export class AnalyticsService {
             const whereClause = isAdmin ? {} : { createdById: userId };
 
             // Get Playbook statistics
-            const totalPlaybooks = await prisma.sOP.count({
+            const totalPlaybooks = await prisma.playbook.count({
                 where: { ...whereClause, deletedAt: null },
             });
 
-            const playbooksByStatus = await prisma.sOP.groupBy({
+            const playbooksByStatus = await prisma.playbook.groupBy({
                 by: ['status'],
                 where: { ...whereClause, deletedAt: null },
                 _count: true,
             });
 
-            const aiGeneratedCount = await prisma.sOP.count({
+            const aiGeneratedCount = await prisma.playbook.count({
                 where: { ...whereClause, generatedByAI: true, deletedAt: null },
             });
 
@@ -53,7 +53,7 @@ export class AnalyticsService {
             return {
                 playbooks: {
                     total: totalPlaybooks,
-                    byStatus: playbooksByStatus.reduce((acc, item) => {
+                    byStatus: playbooksByStatus.reduce((acc: Record<string, number>, item: any) => {
                         acc[item.status] = item._count;
                         return acc;
                     }, {} as Record<string, number>),
@@ -131,7 +131,7 @@ export class AnalyticsService {
         const startDate = new Date();
         startDate.setDate(startDate.getDate() - days);
 
-        const playbooks = await prisma.sOP.findMany({
+        const playbooks = await prisma.playbook.findMany({
             where: {
                 ...whereClause,
                 createdAt: { gte: startDate },
@@ -147,7 +147,7 @@ export class AnalyticsService {
         // Group by date
         const trendData: Record<string, any> = {};
 
-        playbooks.forEach(playbook => {
+        playbooks.forEach((playbook: any) => {
             const dateKey = playbook.createdAt.toISOString().split('T')[0];
             if (!trendData[dateKey]) {
                 trendData[dateKey] = { total: 0, aiGenerated: 0, manual: 0 };

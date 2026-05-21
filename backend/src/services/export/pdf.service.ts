@@ -18,7 +18,7 @@ export class PDFExportService {
     async queueExport(playbookId: string, userId: string, format: string = 'standard') {
         try {
             // Verify Playbook exists
-            const playbook = await prisma.sOP.findUnique({
+            const playbook = await prisma.playbook.findUnique({
                 where: { id: playbookId },
             });
 

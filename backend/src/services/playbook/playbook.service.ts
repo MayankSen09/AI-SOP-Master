@@ -8,7 +8,7 @@ export class PlaybookService {
      */
     async createPlaybook(userId: string, data: any, generatedByAI = false) {
         try {
-            const playbook = await prisma.sOP.create({
+            const playbook = await prisma.playbook.create({
                 data: {
                     title: data.title,
                     departmentId: data.departmentId || 'general',
@@ -64,7 +64,7 @@ export class PlaybookService {
         if (filters.status) where.status = filters.status;
         if (filters.departmentId) where.departmentId = filters.departmentId;
 
-        const playbooks = await prisma.sOP.findMany({
+        const playbooks = await prisma.playbook.findMany({
             where,
             orderBy: { updatedAt: 'desc' },
             include: {
@@ -86,7 +86,7 @@ export class PlaybookService {
      * Get single Playbook by ID
      */
     async getPlaybookById(id: string) {
-        const playbook = await prisma.sOP.findUnique({
+        const playbook = await prisma.playbook.findUnique({
             where: { id },
             include: {
                 createdBy: {
@@ -119,7 +119,7 @@ export class PlaybookService {
             });
         }
 
-        const updated = await prisma.sOP.update({
+        const updated = await prisma.playbook.update({
             where: { id },
             data: {
                 ...updates,
