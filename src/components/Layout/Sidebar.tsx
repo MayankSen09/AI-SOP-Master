@@ -44,12 +44,27 @@ const navSections = [
     },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+    isOpen?: boolean;
+    onClose?: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps = {}) {
     const { logout } = useAuth();
     const location = useLocation();
 
     return (
-        <aside className="fixed left-0 top-0 h-full w-64 sidebar-bg border-r border-default flex flex-col z-50">
+        <>
+            {/* Mobile Overlay */}
+            {isOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
+                    onClick={onClose}
+                />
+            )}
+            <aside className={`fixed left-0 top-0 h-full w-64 sidebar-bg border-r border-default flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 ${
+                isOpen ? 'translate-x-0' : '-translate-x-full'
+            }`}>
             {/* Brand */}
             <div className="px-6 py-5 border-b border-default">
                 <div className="flex items-center gap-3">
@@ -115,6 +130,7 @@ export function Sidebar() {
                     <span>Sign Out</span>
                 </button>
             </div>
-        </aside>
+            </aside>
+        </>
     );
 }
