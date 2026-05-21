@@ -506,22 +506,5 @@ Return ONLY the markdown content. No JSON, no explanations, just the formatted P
     }
 }
 
-// Helper to reuse the fetch logic
-async function callGemini(prompt: string) {
-    if (!apiKey) throw new Error("API Key missing");
-    const safePrompt = sanitizePromptInput(prompt);
 
-    const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-        {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ parts: [{ text: safePrompt }] }] })
-        }
-    );
-    if (!response.ok) throw new Error("API Failed");
-    const data = await response.json();
-    const text = data.candidates[0].content.parts[0].text.trim();
-    return JSON.parse(text.replace(/^```json\n?/, '').replace(/\n?```$/, '').trim());
-}
 
